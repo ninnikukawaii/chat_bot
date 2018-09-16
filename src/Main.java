@@ -1,6 +1,11 @@
+import logic.Input;
+import logic.MainLoop;
+import logic.Output;
+
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        MainLoop mainLoop = new MainLoop(new Input(), new Output());
+        mainLoop.startLoop();
     }
 }

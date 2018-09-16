@@ -20,6 +20,9 @@ public class RequestHandler {
         else if (usersRequest.equals(PhrasesHandler.getQuizPhrase())) {
             return Command.quiz;
         }
+        else if (usersRequest.equals(PhrasesHandler.getHelpPhrase())) {
+            return Command.help;
+        }
         return Command.none;
     }
 
@@ -27,6 +30,10 @@ public class RequestHandler {
         if (command == Command.exit) {
             user.setState(UserState.exit);
             return PhrasesHandler.getEndPhrase();
+        }
+        else if (command == Command.help) {
+            user.setState(UserState.start);
+            return PhrasesHandler.getHelp();
         }
         else if (command == Command.quiz) {
             user.setState(UserState.quiz);
@@ -37,7 +44,7 @@ public class RequestHandler {
         }
         else if (command == Command.none && user.getState() == UserState.quiz) {
             String answer;
-            if (request == user.getLastQuestion().getAnswer()) {
+            if (request.equals(user.getLastQuestion().getAnswer())) {
                 return PhrasesHandler.getCorrectAnswerPhrase() + '\n' + getQuestion(user);
             }
             else {

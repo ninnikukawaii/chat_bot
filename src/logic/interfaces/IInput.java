@@ -2,6 +2,8 @@ package logic.interfaces;
 
 import logic.Request;
 
+import java.io.IOException;
+
 public interface IInput {
-    Request getRequest();
+    Request getRequest() throws IOException;
 }
