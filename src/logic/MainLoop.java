@@ -7,8 +7,6 @@ import logic.handlers.RequestHandler;
 import logic.interfaces.IInput;
 import logic.interfaces.IOutput;
 
-import java.io.IOException;
-
 public class MainLoop {
     private IInput mInput;
     private IOutput mOutput;
