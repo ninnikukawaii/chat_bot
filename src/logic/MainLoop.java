@@ -1,7 +1,7 @@
 package logic;
 
 import logic.enums.Command;
-import logic.handlers.CommandHandler;
+import logic.enums.UserState;
 import logic.handlers.PhrasesHandler;
 import logic.handlers.RequestHandler;
 import logic.interfaces.IInput;
@@ -13,28 +13,27 @@ public class MainLoop {
     private User mUser;
 
     private RequestHandler mRequestHandler;
-    private CommandHandler mCommandHandler;
+
+    private QuestionsData mQuestionsData;
 
     public MainLoop(IInput input, IOutput output){
         mInput = input;
         mOutput = output;
         mUser = new User();
 
-        mRequestHandler = new RequestHandler();
-        mCommandHandler = new CommandHandler();
+        mQuestionsData = new QuestionsData("questions.txt");
+
+        mRequestHandler = new RequestHandler(mQuestionsData);
     }
 
     public void startLoop(){
         mOutput.tellUser(PhrasesHandler.getStartPhrase());
 
-        while (!mUser.isExit()) {
+        while (mUser.getState() != UserState.exit) {
             Request request = mInput.getRequest();
             Command command = mRequestHandler.tryCommandRecognition(request.getUsersRequest());
-            String message = mCommandHandler.getAnswerByCommand(command, mUser);
+            String message = mRequestHandler.getAnswerByCommandAndRequest(command, request.getUsersRequest(), mUser);
             mOutput.tellUser(message);
         }
-
-        String endPhrase = PhrasesHandler.getEndPhrase();
-        mOutput.tellUser(endPhrase);
     }
 }

@@ -4,24 +4,26 @@ import logic.enums.UserState;
 
 public class User {
     private UserState mState;
-    private String mLastMessage;
-    private boolean isExit;
+    private Question mLastQuestion;
 
     public User() {
         mState = UserState.start;
-        mLastMessage = "";
-        isExit = false;
+        mLastQuestion = null;
     }
 
     public UserState getState(){
         return mState;
     }
 
-    public String getLastMessage() {
-        return mLastMessage;
+    public void setState(UserState userState){
+        mState = userState;
     }
 
-    public boolean isExit() {
-        return isExit;
+    public Question getLastQuestion() {
+        return mLastQuestion;
+    }
+
+    public void setLastQuestion(Question lastQuestion) {
+        mLastQuestion = lastQuestion;
     }
 }
