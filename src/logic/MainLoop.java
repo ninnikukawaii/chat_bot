@@ -25,6 +25,7 @@ public class MainLoop {
     }
 
     public void startLoop(){
+        mOutput.tellUser(PhrasesHandler.getStartPhrase());
 
         while (!mUser.isExit()) {
             Request request = mInput.getRequest();

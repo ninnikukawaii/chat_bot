@@ -1,5 +1,7 @@
 package logic.enums;
 
 public enum UserState {
-    start
+    start,
+    quiz,
+    exit
 }
