@@ -12,11 +12,10 @@ public class QuestionsData {
 
     public QuestionsData(String filename) {
         mQuestions = new ArrayList<Question>();
-        mQuestions.add(new Question("lol?", "kek"));
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))){
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                String[] lineParts = line.split("|");
+                String[] lineParts = line.split("~");
                 mQuestions.add(new Question(lineParts[0], lineParts[1]));
             }
         }
@@ -27,7 +26,14 @@ public class QuestionsData {
     }
 
     public Question getQuestion() {
+        if (mQuestions.size() == 0) {
+            return null;
+        }
         int index = random.nextInt(mQuestions.size());
         return mQuestions.get(index);
+    }
+
+    public ArrayList<Question> getAllQuestions() {
+        return mQuestions;
     }
 }
