@@ -1,7 +1,5 @@
 package logic;
-
 import logic.interfaces.IInput;
-
 import java.util.Scanner;
 
 public class Input implements IInput {

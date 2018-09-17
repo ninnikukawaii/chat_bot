@@ -19,24 +19,19 @@ public class MainLoop {
         mOutput = output;
         mUser = new User();
 
-        QuestionsData mQuestionsData = new QuestionsData("questions.txt");
+        QuestionsData questionsData = new QuestionsData("questions.txt");
 
-        mRequestHandler = new RequestHandler(mQuestionsData);
+        mRequestHandler = new RequestHandler(questionsData);
     }
 
     public void startLoop(){
         mOutput.tellUser(PhrasesHandler.getStartPhrase());
 
         while (mUser.getState() != UserState.exit) {
-            Request request;
-            try {
-                request = mInput.getRequest();
-                Command command = mRequestHandler.tryCommandRecognition(request.getUsersRequest());
-                String message = mRequestHandler.getAnswerByCommandAndRequest(command, request.getUsersRequest(), mUser);
-                mOutput.tellUser(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Request request = mInput.getRequest();
+            Command command = mRequestHandler.tryCommandRecognition(request.getUsersRequest());
+            String message = mRequestHandler.getAnswerByCommandAndRequest(command, request.getUsersRequest(), mUser);
+            mOutput.tellUser(message);
         }
     }
 }

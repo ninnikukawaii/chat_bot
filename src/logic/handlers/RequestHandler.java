@@ -17,11 +17,11 @@ public class RequestHandler {
         if (usersRequest.equals(PhrasesHandler.getExitPhrase())) {
             return Command.exit;
         }
-        else if (usersRequest.equals(PhrasesHandler.getQuizPhrase())) {
-            return Command.quiz;
-        }
         else if (usersRequest.equals(PhrasesHandler.getHelpPhrase())) {
             return Command.help;
+        }
+        else if (usersRequest.equals(PhrasesHandler.getQuizPhrase())) {
+            return Command.quiz;
         }
         return Command.none;
     }
