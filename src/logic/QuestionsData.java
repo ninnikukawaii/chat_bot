@@ -16,7 +16,7 @@ public class QuestionsData {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] lineParts = line.split("~");
-                mQuestions.add(new Question(lineParts[0], lineParts[1]));
+                mQuestions.add(new Question(lineParts[0], lineParts[1].toLowerCase()));
             }
         }
         catch (IOException exception){
