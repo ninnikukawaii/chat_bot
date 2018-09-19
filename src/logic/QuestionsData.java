@@ -25,6 +25,7 @@ public class QuestionsData {
         random = new Random();
     }
 
+
     public Question getQuestion() {
         if (mQuestions.size() == 0) {
             return null;
@@ -34,6 +35,10 @@ public class QuestionsData {
     }
 
     public ArrayList<Question> getAllQuestions() {
-        return mQuestions;
+        return new ArrayList<Question>(mQuestions);
+    }
+
+    public int getSize() {
+        return mQuestions.size();
     }
 }
