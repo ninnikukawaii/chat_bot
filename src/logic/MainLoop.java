@@ -7,6 +7,7 @@ import logic.handlers.RequestHandler;
 import logic.interfaces.Input;
 import logic.interfaces.Output;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainLoop {
@@ -14,9 +15,13 @@ public class MainLoop {
     private RequestHandler mRequestHandler;
 
     public MainLoop() {
-        QuestionsData questionsData = new QuestionsData("questions.txt");
+        try {
+            QuestionsData questionsData = new QuestionsData("questions.txt");
 
-        mRequestHandler = new RequestHandler(questionsData);
+            mRequestHandler = new RequestHandler(questionsData);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void startLoop(Input input, Output output){
