@@ -1,11 +1,11 @@
 package logic;
-import logic.interfaces.IInput;
+import logic.interfaces.Input;
 import java.util.Scanner;
 
-public class Input implements IInput {
+public class ScannerInput implements Input {
     private Scanner scanner;
 
-    public Input() {
+    public ScannerInput() {
         scanner = new Scanner(System.in);
     }
 

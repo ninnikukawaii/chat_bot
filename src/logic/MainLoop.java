@@ -4,34 +4,33 @@ import logic.enums.Command;
 import logic.enums.UserState;
 import logic.handlers.PhrasesHandler;
 import logic.handlers.RequestHandler;
-import logic.interfaces.IInput;
-import logic.interfaces.IOutput;
+import logic.interfaces.Input;
+import logic.interfaces.Output;
+
+import java.util.ArrayList;
 
 public class MainLoop {
-    private IInput mInput;
-    private IOutput mOutput;
-    private User mUser;
 
     private RequestHandler mRequestHandler;
 
-    public MainLoop(IInput input, IOutput output){
-        mInput = input;
-        mOutput = output;
-        mUser = new User();
-
+    public MainLoop() {
         QuestionsData questionsData = new QuestionsData("questions.txt");
 
         mRequestHandler = new RequestHandler(questionsData);
     }
 
-    public void startLoop(){
-        mOutput.tellUser(PhrasesHandler.getStartPhrase());
+    public void startLoop(Input input, Output output){
+        User user = new User();
 
-        while (mUser.getState() != UserState.exit) {
-            Request request = mInput.getRequest();
+        ArrayList<String> messages = new ArrayList<>();
+        messages.add(PhrasesHandler.getStartPhrase());
+        output.tellUser(messages);
+
+        while (user.getState() != UserState.exit) {
+            Request request = input.getRequest();
             Command command = mRequestHandler.tryCommandRecognition(request.getUsersRequest());
-            String message = mRequestHandler.getAnswerByCommandAndRequest(command, request.getUsersRequest(), mUser);
-            mOutput.tellUser(message);
+            messages = mRequestHandler.getAnswerByCommandAndRequest(command, request.getUsersRequest(), user);
+            output.tellUser(messages);
         }
     }
 }
