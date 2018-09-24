@@ -1,10 +1,10 @@
-import logic.Input;
+import logic.ConsoleOutput;
 import logic.MainLoop;
-import logic.Output;
+import logic.ScannerInput;
 
 public class Main {
     public static void main(String[] args) {
-        MainLoop mainLoop = new MainLoop(new Input(), new Output());
-        mainLoop.startLoop();
+        MainLoop mainLoop = new MainLoop();
+        mainLoop.startLoop(new ScannerInput(), new ConsoleOutput());
     }
 }

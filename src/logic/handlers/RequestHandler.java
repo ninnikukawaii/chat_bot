@@ -6,6 +6,8 @@ import logic.User;
 import logic.enums.Command;
 import logic.enums.UserState;
 
+import java.util.ArrayList;
+
 public class RequestHandler {
     private QuestionsData mQuestionData;
 
@@ -26,7 +28,7 @@ public class RequestHandler {
         return Command.none;
     }
 
-    public String getAnswerByCommandAndRequest(Command command, String request, User user) {
+    public ArrayList<String> getAnswerByCommandAndRequest(Command command, String request, User user) {
         if (command == Command.exit) {
             user.setState(UserState.exit);
             return PhrasesHandler.getEndPhrase();

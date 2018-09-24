@@ -2,6 +2,6 @@ package logic.interfaces;
 
 import logic.Request;
 
-public interface IInput {
+public interface Input {
     Request getRequest();
 }
