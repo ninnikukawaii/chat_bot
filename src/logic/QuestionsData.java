@@ -10,7 +10,7 @@ public class QuestionsData {
     private ArrayList<Question> mQuestions;
     private Random random;
 
-    public QuestionsData(String filename) {
+    public QuestionsData(String filename) throws IOException{
         mQuestions = new ArrayList<Question>();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))){
             String line;
@@ -19,8 +19,8 @@ public class QuestionsData {
                 mQuestions.add(new Question(lineParts[0], lineParts[1].toLowerCase()));
             }
         }
-        catch (IOException exception){
-            System.out.println(exception.getMessage());
+        catch (IOException ex){
+            throw ex;
         }
         random = new Random();
     }
