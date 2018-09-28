@@ -1,17 +1,19 @@
 package logic;
 
+import logic.interfaces.QuestionData;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class QuestionsData {
+public class QuestionsData implements QuestionData {
     private ArrayList<Question> mQuestions;
     private Random random;
 
     public QuestionsData(String filename) throws IOException{
-        mQuestions = new ArrayList<Question>();
+        mQuestions = new ArrayList<>();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))){
             String line;
             while ((line = bufferedReader.readLine()) != null) {
@@ -35,7 +37,7 @@ public class QuestionsData {
     }
 
     public ArrayList<Question> getAllQuestions() {
-        return new ArrayList<Question>(mQuestions);
+        return new ArrayList<>(mQuestions);
     }
 
     public int getSize() {
