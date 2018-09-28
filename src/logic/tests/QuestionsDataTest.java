@@ -5,9 +5,9 @@ import logic.QuestionsData;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 
 public class QuestionsDataTest {
     private String path = "testquestions.txt";
@@ -17,7 +17,8 @@ public class QuestionsDataTest {
         try
         {
             QuestionsData questionsData = new QuestionsData(path);
-            assertTrue(questionsData.getAllQuestions().contains(new Question("Как называется пятнистая лошадь?", "пинто")));
+            assertThat(questionsData.getAllQuestions(), hasItem(new Question("Как называется пятнистая лошадь?", "пинто")));
+            //assertTrue(questionsData.getAllQuestions().contains());
         }
         catch (IOException e){
             System.out.println("Wrong testQuestionBase: " + e.getMessage());
