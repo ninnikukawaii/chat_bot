@@ -31,9 +31,9 @@ public class MainLoop {
         messages.add(PhrasesHandler.getStartPhrase());
         output.tellUser(messages);
 
-        while (user.getState() != UserState.exit) {
+        while (user.getState() != UserState.EXIT) {
             Request request = input.getRequest();
-            Command command = mRequestHandler.tryCommandRecognition(request.getUsersRequest());
+            Command command = Command.valueByString(request.getUsersRequest());
             messages = mRequestHandler.getAnswerByCommandAndRequest(command, request.getUsersRequest(), user);
             output.tellUser(messages);
         }

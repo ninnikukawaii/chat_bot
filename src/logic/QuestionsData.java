@@ -18,7 +18,7 @@ public class QuestionsData implements QuestionData {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] lineParts = line.split("~");
-                mQuestions.add(new Question(lineParts[0], lineParts[1].toLowerCase()));
+                mQuestions.add(new Question(lineParts[0], lineParts[1]));
             }
         }
         catch (IOException ex){
