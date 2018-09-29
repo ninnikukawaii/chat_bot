@@ -15,45 +15,68 @@ public class RequestHandler {
         mQuestionData = questionsData;
     }
 
-    public Command tryCommandRecognition(String usersRequest) {
-        if (usersRequest.equals(PhrasesHandler.getExitPhrase())) {
-            return Command.exit;
-        }
-        else if (usersRequest.equals(PhrasesHandler.getHelpPhrase())) {
-            return Command.help;
-        }
-        else if (usersRequest.equals(PhrasesHandler.getQuizPhrase())) {
-            return Command.quiz;
-        }
-        return Command.none;
-    }
-
     public ArrayList<String> getAnswerByCommandAndRequest(Command command, String request, User user) {
-        if (command == Command.exit) {
-            user.setState(UserState.exit);
-            return PhrasesHandler.getEndPhrase();
-        }
-        else if (command == Command.help) {
-            user.setState(UserState.start);
-            return PhrasesHandler.getHelp();
-        }
-        else if (command == Command.quiz) {
-            user.setState(UserState.quiz);
-            String answer = PhrasesHandler.getStartQuizPhrase();
+        ArrayList<String> answer = new ArrayList<>();
 
-            answer += "\n" + getQuestion(user);
+        if (command == Command.EXIT && user.getState() == UserState.DIALOG) {
+            user.setState(UserState.EXIT);
+
+            answer.add(PhrasesHandler.getEndPhrase());
+
             return answer;
         }
-        else if (command == Command.none && user.getState() == UserState.quiz) {
-            String answer;
-            if (request.equals(user.getLastQuestion().getAnswer())) {
-                return PhrasesHandler.getCorrectAnswerPhrase() + '\n' + getQuestion(user);
+        else if (command == Command.EXIT && user.getState() == UserState.QUIZ) {
+            user.setState(UserState.DIALOG);
+
+            answer.add(PhrasesHandler.getEndQuizPhrase());
+
+            return answer;
+        }
+        else if (command == Command.HELP && user.getState() == UserState.DIALOG) {
+            answer.add(PhrasesHandler.getHelp());
+
+            return answer;
+        }
+        else if (command == Command.QUIZ && user.getState() == UserState.DIALOG) {
+            user.setState(UserState.QUIZ);
+
+            answer.add(PhrasesHandler.getStartQuizPhrase());
+            answer.add(getQuestion(user));
+
+            return answer;
+        }
+        else if (command == Command.HELP && user.getState() == UserState.QUIZ) {
+            answer.add(PhrasesHandler.getQuizHelp());
+            return answer;
+        }
+        else if (command == Command.NONE && user.getState() == UserState.QUIZ) {
+            if (request.toLowerCase().equals(user.getLastQuestion().getAnswer().toLowerCase())) {
+                answer.add(PhrasesHandler.getCorrectAnswerPhrase());
+                answer.add(getQuestion(user));
+
+                return answer;
             }
             else {
-                return PhrasesHandler.getUncorrectAnswerPhrase();
+                answer.add(PhrasesHandler.getIncorrectAnswerPhrase());
+
+                return answer;
             }
         }
-        return PhrasesHandler.getUnknowPhrase();
+        else if (command == Command.GIVE_UP && user.getState() == UserState.QUIZ) {
+            answer.add(PhrasesHandler.getCorrectAnswerInQuiz(user.getLastQuestion().getAnswer()));
+            answer.add(getQuestion(user));
+
+            return answer;
+        }
+        else if (command == Command.REPEAT_QUESTION && user.getState() == UserState.QUIZ) {
+            answer.add(user.getLastQuestion().getQuestion());
+
+            return answer;
+        }
+
+        answer.add(PhrasesHandler.getUnknownPhrase());
+
+        return answer;
     }
 
     private String getQuestion(User user) {

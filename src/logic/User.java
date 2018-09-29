@@ -7,7 +7,7 @@ public class User {
     private Question mLastQuestion;
 
     public User() {
-        mState = UserState.start;
+        mState = UserState.DIALOG;
         mLastQuestion = null;
     }
 
