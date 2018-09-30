@@ -10,14 +10,15 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 public class QuestionsDataTest {
-    private String path = "testquestions.txt";
+    private String path = "src\\logic\\tests\\testquestions.txt";
 
     @Test
     public void testQuestionBase() {
         try
         {
             QuestionsData questionsData = new QuestionsData(path);
-            assertThat(questionsData.getAllQuestions(), hasItem(new Question("Как называется пятнистая лошадь?", "пинто")));
+            Question question = questionsData.getQuestion();
+            assertThat(questionsData.getAllQuestions(), hasItem(question));
             //assertTrue(questionsData.getAllQuestions().contains());
         }
         catch (IOException e){
