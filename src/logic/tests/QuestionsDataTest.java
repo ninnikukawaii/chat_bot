@@ -13,7 +13,7 @@ public class QuestionsDataTest {
     private String path = "testQuestions.txt";
 
     @Test
-    public void testQuestionBase() {
+    public void testQuestionBase() throws IOException {
         try
         {
             QuestionsData questionsData = new QuestionsData(path);
