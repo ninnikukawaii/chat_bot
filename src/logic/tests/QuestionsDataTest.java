@@ -29,7 +29,7 @@ public class QuestionsDataTest {
 
     @Test(expected = IOException.class)
     public void testWrongPath() throws IOException{
-        QuestionsData wrongData = new QuestionsData("beliberda");
+        new QuestionsData("beliberda");
     }
 
     @Test
