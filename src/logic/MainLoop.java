@@ -14,14 +14,10 @@ public class MainLoop {
 
     private RequestHandler mRequestHandler;
 
-    public MainLoop() {
-        try {
-            QuestionsData questionsData = new QuestionsData("questions.txt");
+    public MainLoop() throws IOException {
+        QuestionsData questionsData = new QuestionsData("questions.txt");
 
-            mRequestHandler = new RequestHandler(questionsData);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        mRequestHandler = new RequestHandler(questionsData);
     }
 
     public void startLoop(Input input, Output output){
