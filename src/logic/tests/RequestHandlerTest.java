@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 public class RequestHandlerTest {
-    private String path = "src\\logic\\tests\\testquestions.txt";
+    private String path = "testQuestions.txt";
 
     @Test
     public void testExitDialog(){
@@ -30,7 +30,7 @@ public class RequestHandlerTest {
         }
         catch (IOException e){
             System.out.println("Wrong testExitDialog: " + e.getMessage());
-            assertTrue(false);
+            fail();
         }
     }
 
@@ -47,7 +47,7 @@ public class RequestHandlerTest {
         }
         catch (IOException e){
             System.out.println("Wrong testExitQuiz: " + e.getMessage());
-            assertTrue(false);
+            fail();
         }
     }
 
@@ -62,7 +62,7 @@ public class RequestHandlerTest {
         }
         catch (IOException e){
             System.out.println("Wrong testDialogHelp: " + e.getMessage());
-            assertTrue(false);
+            fail();
         }
 
     }
@@ -79,7 +79,7 @@ public class RequestHandlerTest {
         }
         catch (IOException e){
             System.out.println("Wrong testQuiz: " + e.getMessage());
-            assertTrue(false);
+            fail();
         }
 
     }
@@ -96,7 +96,7 @@ public class RequestHandlerTest {
         }
         catch (IOException e){
             System.out.println("Wrong testQuizHelp: " + e.getMessage());
-            assertTrue(false);
+            fail();
         }
     }
 
@@ -113,7 +113,7 @@ public class RequestHandlerTest {
         }
         catch (IOException e){
             System.out.println("Wrong testGiveUp: " + e.getMessage());
-            assertTrue(false);
+            fail();
         }
     }
 
@@ -149,7 +149,7 @@ public class RequestHandlerTest {
         }
         catch (IOException e){
             System.out.println("Wrong testUserAnswers: " + e.getMessage());
-            assertTrue(false);
+            fail();
         }
     }
 
@@ -164,7 +164,7 @@ public class RequestHandlerTest {
         }
         catch (IOException e){
             System.out.println("Wrong testIncorrectPhrase: " + e.getMessage());
-            assertTrue(false);
+            fail();
         }
     }
 }

@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 public class QuestionsDataTest {
-    private String path = "src\\logic\\tests\\testquestions.txt";
+    private String path = "testQuestions.txt";
 
     @Test
     public void testQuestionBase() {
@@ -19,11 +19,11 @@ public class QuestionsDataTest {
             QuestionsData questionsData = new QuestionsData(path);
             Question question = questionsData.getQuestion();
             assertThat(questionsData.getAllQuestions(), hasItem(question));
-            //assertTrue(questionsData.getAllQuestions().contains());
+            //assertTrue(questionsData.getAllQuestions().contains(new Question("Как называется пятнистая лошадь?", "пинто")));
         }
         catch (IOException e){
             System.out.println("Wrong testQuestionBase: " + e.getMessage());
-            assertTrue(false);
+            fail();
         }
     }
 
@@ -41,7 +41,7 @@ public class QuestionsDataTest {
         }
         catch (IOException e){
             System.out.println("Wrong testGetQuestion: " + e.getMessage());
-            assertTrue(false);
+            fail();
         }
     }
 }
