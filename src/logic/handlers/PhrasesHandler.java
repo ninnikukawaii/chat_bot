@@ -66,4 +66,8 @@ public class PhrasesHandler {
     public static String getRepeatQuestionCommand() {
         return "Повтори вопрос";
     }
+
+    public static String getNoneCommand() {
+        return "NONE";
+    }
 }
