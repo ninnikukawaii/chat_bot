@@ -17,9 +17,7 @@ public class QuestionsDataTest {
         try
         {
             QuestionsData questionsData = new QuestionsData(path);
-            Question question = questionsData.getQuestion();
-            assertThat(questionsData.getAllQuestions(), hasItem(question));
-            //assertTrue(questionsData.getAllQuestions().contains(new Question("Как называется пятнистая лошадь?", "пинто")));
+            assertTrue(questionsData.getAllQuestions().contains(new Question("Как называется пятнистая лошадь?", "Пинто")));
         }
         catch (IOException e){
             System.out.println("Wrong testQuestionBase: " + e.getMessage());
