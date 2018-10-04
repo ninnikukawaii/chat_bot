@@ -9,7 +9,7 @@ public enum Command implements Serializable {
     EXIT (PhrasesHandler.getExitCommand()),
     QUIZ (PhrasesHandler.getQuizCommand()),
     GIVE_UP (PhrasesHandler.getGiveUpCommand()),
-    REPEAT_QUESTION (PhrasesHandler.getRepeatQuestionCommand()),,
+    REPEAT_QUESTION (PhrasesHandler.getRepeatQuestionCommand()),
     NONE (PhrasesHandler.getNoneCommand());
 
     private final String name;

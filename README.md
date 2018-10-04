@@ -4,4 +4,4 @@ RequestHandler: поправить команды в енуме +
                 Улучшение сравнения с использованием состояния юзера (часть логики в енум/класс) +
 Тесты разобраться с трай кетч 
 assertThat вместо NotEquals 
-дебаг с assertThat - изменить в question hashCode
+дебаг с assertThat (-изменить-в-question-hashCode-) +
