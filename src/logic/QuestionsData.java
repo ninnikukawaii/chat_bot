@@ -1,14 +1,12 @@
 package logic;
 
-import logic.interfaces.QuestionData;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class QuestionsData implements QuestionData {
+public class QuestionsData implements logic.interfaces.QuestionsData {
     private ArrayList<Question> mQuestions;
     private Random random;
 
