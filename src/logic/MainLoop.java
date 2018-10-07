@@ -2,6 +2,7 @@ package logic;
 
 import logic.enums.Command;
 import logic.enums.UserState;
+import logic.exception.FileReadException;
 import logic.handlers.PhrasesHandler;
 import logic.handlers.RequestHandler;
 import logic.interfaces.Input;
@@ -14,7 +15,7 @@ public class MainLoop {
 
     private RequestHandler mRequestHandler;
 
-    public MainLoop() throws IOException {
+    public MainLoop() throws FileReadException {
         QuestionsData questionsData = new QuestionsData("questions.txt");
 
         mRequestHandler = new RequestHandler(questionsData);

@@ -5,6 +5,7 @@ import logic.QuestionsData;
 import logic.User;
 import logic.enums.Command;
 import logic.enums.UserState;
+import logic.exception.FileReadException;
 import logic.handlers.PhrasesHandler;
 import logic.handlers.RequestHandler;
 import org.junit.Test;
@@ -21,13 +22,13 @@ public class RequestHandlerTest {
     private QuestionsData questionsData;
     private RequestHandler requestHandler;
 
-    public void trySetValue() throws IOException {
+    public void trySetValue() throws FileReadException {
         questionsData = new QuestionsData(path);
         requestHandler = new RequestHandler(questionsData);
     }
 
     @Test
-    public void testExitDialog() throws IOException {
+    public void testExitDialog() throws FileReadException {
         trySetValue();
         ArrayList<String> result = requestHandler.getAnswerByCommandAndRequest(Command.EXIT, "none", user);
         assertThat(result, hasItem(PhrasesHandler.getEndPhrase()));
@@ -35,7 +36,7 @@ public class RequestHandlerTest {
     }
 
     @Test
-    public void testExitQuiz() throws IOException {
+    public void testExitQuiz() throws FileReadException {
         trySetValue();
         user.setState(UserState.QUIZ);
         ArrayList<String> result = requestHandler.getAnswerByCommandAndRequest(Command.EXIT, "none", user);
@@ -44,14 +45,14 @@ public class RequestHandlerTest {
     }
 
     @Test
-    public void testDialogHelp() throws IOException {
+    public void testDialogHelp() throws FileReadException {
         trySetValue();
         ArrayList<String> result = requestHandler.getAnswerByCommandAndRequest(Command.HELP, "none", user);
         assertThat(result, hasItem(PhrasesHandler.getHelp()));
     }
 
     @Test
-    public void testQuiz() throws IOException {
+    public void testQuiz() throws FileReadException {
         trySetValue();
         ArrayList<String> result = requestHandler.getAnswerByCommandAndRequest(Command.QUIZ, "none", user);
         assertThat(result, hasItem(PhrasesHandler.getStartQuizPhrase()));
@@ -59,7 +60,7 @@ public class RequestHandlerTest {
     }
 
     @Test
-    public void testQuizHelp() throws IOException {
+    public void testQuizHelp() throws FileReadException {
         trySetValue();
         user.setState(UserState.QUIZ);
         ArrayList<String> result = requestHandler.getAnswerByCommandAndRequest(Command.HELP, "none", user);
@@ -67,7 +68,7 @@ public class RequestHandlerTest {
     }
 
     @Test
-    public void testGiveUp() throws IOException{
+    public void testGiveUp() throws FileReadException{
         trySetValue();
         user.setState(UserState.QUIZ);
         user.setLastQuestion(new Question("Как называется пятнистая лошадь?", "пинто"));
@@ -76,7 +77,7 @@ public class RequestHandlerTest {
     }
 
     @Test
-    public void testRepeatQuestion() throws IOException {
+    public void testRepeatQuestion() throws FileReadException {
         trySetValue();
         user.setState(UserState.QUIZ);
         user.setLastQuestion(new Question("Как называется пятнистая лошадь?", "пинто"));
@@ -85,7 +86,7 @@ public class RequestHandlerTest {
     }
 
     @Test
-    public void testUserAnswers() throws IOException {
+    public void testUserAnswers() throws FileReadException {
         trySetValue();
         user.setState(UserState.QUIZ);
         user.setLastQuestion(new Question("Как называется пятнистая лошадь?", "пинто"));
@@ -96,7 +97,7 @@ public class RequestHandlerTest {
     }
 
     @Test
-    public void testIncorrectPhrase() throws IOException {
+    public void testIncorrectPhrase() throws FileReadException {
         trySetValue();
         ArrayList<String> result = requestHandler.getAnswerByCommandAndRequest(Command.NONE, "none", user);
         assertThat(result, hasItem(PhrasesHandler.getUnknownPhrase()));
