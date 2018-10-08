@@ -18,10 +18,13 @@ public class QuestionsData implements logic.interfaces.QuestionsData {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] lineParts = line.split("~");
+                if (lineParts.length != 2){
+                    throw new IllegalStateException("Incorrect number of arguments");
+                }
                 mQuestions.add(new Question(lineParts[0], lineParts[1]));
             }
         }
-        catch (IOException | ArrayIndexOutOfBoundsException ex) {
+        catch (IOException | IllegalStateException ex) {
             throw new FileReadException(ex.getMessage());
         }
         random = new Random();
