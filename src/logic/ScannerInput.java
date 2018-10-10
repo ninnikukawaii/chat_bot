@@ -12,6 +12,6 @@ public class ScannerInput implements Input {
     @Override
     public Request getRequest() {
         String request = scanner.nextLine();
-        return new Request(request);
+        return new Request(request, 0L);
     }
 }

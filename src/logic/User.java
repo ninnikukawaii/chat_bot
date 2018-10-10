@@ -3,27 +3,33 @@ package logic;
 import logic.enums.UserState;
 
 public class User {
-    private UserState mState;
-    private Question mLastQuestion;
+    private UserState state;
+    private Question lastQuestion;
+    private Long id;
 
-    public User() {
-        mState = UserState.DIALOG;
-        mLastQuestion = null;
+    public User(Long id) {
+        state = UserState.DIALOG;
+        lastQuestion = null;
+        this.id = id;
     }
 
     public UserState getState(){
-        return mState;
+        return state;
     }
 
     public void setState(UserState userState){
-        mState = userState;
+        state = userState;
     }
 
     public Question getLastQuestion() {
-        return mLastQuestion;
+        return lastQuestion;
     }
 
     public void setLastQuestion(Question lastQuestion) {
-        mLastQuestion = lastQuestion;
+        this.lastQuestion = lastQuestion;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

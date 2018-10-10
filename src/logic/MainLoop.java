@@ -8,31 +8,45 @@ import logic.handlers.RequestHandler;
 import logic.interfaces.Input;
 import logic.interfaces.Output;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainLoop {
 
-    private RequestHandler mRequestHandler;
+    private RequestHandler requestHandler;
+    private HashMap<Long, User> users = new HashMap<>();
 
     public MainLoop() throws FileReadException {
         QuestionsData questionsData = new QuestionsData("questions.txt");
 
-        mRequestHandler = new RequestHandler(questionsData);
+        requestHandler = new RequestHandler(questionsData);
     }
 
     public void startLoop(Input input, Output output){
-        User user = new User();
-
-        ArrayList<String> messages = new ArrayList<>();
-        messages.add(PhrasesHandler.getStartPhrase());
-        output.tellUser(messages);
-
-        while (user.getState() != UserState.EXIT) {
+        while (true) {
             Request request = input.getRequest();
+            // System.out.println('s');
+            if (request == null) {
+                continue;
+            }
+
+            Long id = request.getUserId();
+
+            if (!users.containsKey(request.getUserId())) {
+                users.put(id, new User(id));
+            }
+            User user = users.get(id);
+
             Command command = Command.valueByString(request.getUsersRequest());
-            messages = mRequestHandler.getAnswerByCommandAndRequest(command, request.getUsersRequest(), user);
-            output.tellUser(messages);
+            ArrayList<String> messages =
+                    requestHandler.getAnswerByCommandAndRequest(command, request.getUsersRequest(), user);
+            output.tellUser(messages, user);
+
+            if (user.getState() == UserState.EXIT) {
+                users.remove(id);
+                break;
+            }
         }
     }
 }
