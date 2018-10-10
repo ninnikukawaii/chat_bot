@@ -18,7 +18,7 @@ import static org.hamcrest.CoreMatchers.*;
 
 public class RequestHandlerTest {
     private String path = "testQuestions.txt";
-    private User user = new User();
+    private User user = new User(0L);
     private QuestionsData questionsData;
     private RequestHandler requestHandler;
 

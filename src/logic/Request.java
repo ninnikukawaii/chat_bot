@@ -1,13 +1,19 @@
 package logic;
 
 public class Request {
-    private String mRequest;
+    private String request;
+    private Long userId;
 
-    public Request(String request){
-        mRequest = request;
+    public Request(String request, Long userId){
+        this.request = request;
+        this.userId = userId;
     }
 
     public String getUsersRequest() {
-        return mRequest;
+        return request;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 }
