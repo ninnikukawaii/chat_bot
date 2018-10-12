@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws FileReadException, TelegramApiException {
+    public static void main(String[] args) throws FileReadException, TelegramApiException, InterruptedException {
         ApiContextInitializer.init();
         TelegramBotsApi botapi = new TelegramBotsApi();
 

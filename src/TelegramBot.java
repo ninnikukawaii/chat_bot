@@ -18,7 +18,6 @@ public class TelegramBot extends TelegramLongPollingBot implements Input, Output
     public void onUpdateReceived(Update update) {
         Message msg = update.getMessage();
         requests.add(new Request(msg.getText(), msg.getChatId()));
-        System.out.println(requests.size());
     }
 
     @Override
@@ -39,7 +38,7 @@ public class TelegramBot extends TelegramLongPollingBot implements Input, Output
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean isNoRequests() {
         return requests.isEmpty();
     }
 

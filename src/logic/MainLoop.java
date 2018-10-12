@@ -23,10 +23,11 @@ public class MainLoop {
         requestHandler = new RequestHandler(questionsData);
     }
 
-    public void startLoop(Input input, Output output){
+    public void startLoop(Input input, Output output) throws InterruptedException {
         while (true) {
-            // System.out.println('l');
-            if (input.isEmpty()) {
+            Thread.sleep(10);
+            
+            if (input.isNoRequests()) {
                 continue;
             }
             Request request = input.getRequest();

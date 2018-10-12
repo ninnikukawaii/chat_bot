@@ -8,7 +8,7 @@ public class User {
     private Long id;
 
     public User(Long id) {
-        state = UserState.DIALOG;
+        state = UserState.START;
         lastQuestion = null;
         this.id = id;
     }

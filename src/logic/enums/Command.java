@@ -5,6 +5,7 @@ import logic.handlers.PhrasesHandler;
 import java.io.Serializable;
 
 public enum Command implements Serializable {
+    START (PhrasesHandler.getStartCommand()),
     HELP (PhrasesHandler.getHelpCommand()),
     EXIT (PhrasesHandler.getExitCommand()),
     QUIZ (PhrasesHandler.getQuizCommand()),
