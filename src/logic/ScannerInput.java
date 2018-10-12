@@ -14,4 +14,9 @@ public class ScannerInput implements Input {
         String request = scanner.nextLine();
         return new Request(request, 0L);
     }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 }

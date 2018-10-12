@@ -39,6 +39,11 @@ public class TelegramBot extends TelegramLongPollingBot implements Input, Output
     }
 
     @Override
+    public boolean isEmpty() {
+        return requests.isEmpty();
+    }
+
+    @Override
     public void tellUser(ArrayList<String> messages, User user) {
         StringBuilder stringBuilder = new StringBuilder();
         for (String message : messages) {
