@@ -4,4 +4,6 @@ import logic.Request;
 
 public interface Input {
     Request getRequest();
+
+    boolean isEmpty();
 }

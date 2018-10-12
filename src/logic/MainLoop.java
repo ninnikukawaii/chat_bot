@@ -25,11 +25,11 @@ public class MainLoop {
 
     public void startLoop(Input input, Output output){
         while (true) {
-            Request request = input.getRequest();
-            // System.out.println('s');
-            if (request == null) {
+            // System.out.println('l');
+            if (input.isEmpty()) {
                 continue;
             }
+            Request request = input.getRequest();
 
             Long id = request.getUserId();
 
@@ -45,7 +45,6 @@ public class MainLoop {
 
             if (user.getState() == UserState.EXIT) {
                 users.remove(id);
-                break;
             }
         }
     }
