@@ -70,4 +70,12 @@ public class PhrasesHandler {
     public static String getNoneCommand() {
         return "NONE";
     }
+
+    public static String getStartCommand() {
+        return "/start";
+    }
+
+    public static String getStartHelp() {
+        return "Для начала диалога введите: \"" + getStartCommand() + "\" (без ковычек)";
+    }
 }

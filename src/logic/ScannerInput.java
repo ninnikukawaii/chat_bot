@@ -16,7 +16,7 @@ public class ScannerInput implements Input {
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean isNoRequests() {
         return false;
     }
 }
