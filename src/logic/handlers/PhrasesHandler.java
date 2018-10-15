@@ -76,6 +76,6 @@ public class PhrasesHandler {
     }
 
     public static String getStartHelp() {
-        return "Для начала диалога введите: \"" + getStartCommand() + "\" (без ковычек)";
+        return "Для начала диалога введите: \"" + getStartCommand() + "\" (без кавычек)";
     }
 }
