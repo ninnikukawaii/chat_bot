@@ -44,19 +44,16 @@ public class TelegramBot extends TelegramLongPollingBot implements Input, Output
 
     @Override
     public void tellUser(ArrayList<String> messages, User user) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String message : messages) {
-            stringBuilder.append(message);
-            stringBuilder.append('\n');
-        }
+        String answer = String.join("\n", messages);
 
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(user.getId());
-        sendMessage.setText(stringBuilder.toString());
+        sendMessage.setText(answer);
         try {
             execute(sendMessage);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+
     }
 }
