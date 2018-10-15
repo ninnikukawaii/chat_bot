@@ -3,9 +3,10 @@ package logic.interfaces;
 import logic.Question;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface QuestionsData {
     Question getQuestion();
-    ArrayList<Question> getAllQuestions();
+    List<Question> getAllQuestions();
     int getSize();
 }

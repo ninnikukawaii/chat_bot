@@ -10,12 +10,13 @@ import logic.interfaces.Output;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainLoop {
 
     private RequestHandler requestHandler;
-    private HashMap<Long, User> users = new HashMap<>();
+    private Map<Long, User> users = new HashMap<>();
 
     public MainLoop() throws FileReadException {
         QuestionsData questionsData = new QuestionsData("questions.txt");
@@ -26,11 +27,11 @@ public class MainLoop {
     public void startLoop(Input input, Output output) throws InterruptedException {
         while (true) {
             Thread.sleep(10);
-            
-            if (input.isNoRequests()) {
+
+            Request request = input.getRequest();
+            if (request == null) {
                 continue;
             }
-            Request request = input.getRequest();
 
             Long id = request.getUserId();
 
@@ -40,7 +41,7 @@ public class MainLoop {
             User user = users.get(id);
 
             Command command = Command.valueByString(request.getUsersRequest());
-            ArrayList<String> messages =
+            List<String> messages =
                     requestHandler.getAnswerByCommandAndRequest(command, request.getUsersRequest(), user);
             output.tellUser(messages, user);
 
