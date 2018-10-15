@@ -15,8 +15,4 @@ public class ScannerInput implements Input {
         return new Request(request, 0L);
     }
 
-    @Override
-    public boolean isNoRequests() {
-        return false;
-    }
 }

@@ -10,6 +10,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TelegramBot extends TelegramLongPollingBot implements Input, Output {
     private ArrayDeque<Request> requests = new ArrayDeque<>();
@@ -38,12 +39,7 @@ public class TelegramBot extends TelegramLongPollingBot implements Input, Output
     }
 
     @Override
-    public boolean isNoRequests() {
-        return requests.isEmpty();
-    }
-
-    @Override
-    public void tellUser(ArrayList<String> messages, User user) {
+    public void tellUser(List<String> messages, User user) {
         String answer = String.join("\n", messages);
 
         SendMessage sendMessage = new SendMessage();

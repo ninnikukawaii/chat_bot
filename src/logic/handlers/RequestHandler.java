@@ -7,6 +7,7 @@ import logic.enums.Command;
 import logic.enums.UserState;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RequestHandler {
     private QuestionsData mQuestionData;
@@ -15,8 +16,8 @@ public class RequestHandler {
         mQuestionData = questionsData;
     }
 
-    public ArrayList<String> getAnswerByCommandAndRequest(Command command, String request, User user) {
-        ArrayList<String> answer = new ArrayList<>();
+    public List<String> getAnswerByCommandAndRequest(Command command, String request, User user) {
+        List<String> answer = new ArrayList<>();
 
         if (command == Command.START) {
             user.setState(UserState.DIALOG);
