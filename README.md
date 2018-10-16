@@ -10,5 +10,5 @@
 - токен и имя бота в конфиги
 - input убрать hasRequests и возвращать null +
 - MainLoop: hashmap и arraylist +
-- добавить флаги в юзера
-- элиф в requesthandler разнести в команды
+- добавить флаги в юзера +
+- элиф в requesthandler разнести в команды +
