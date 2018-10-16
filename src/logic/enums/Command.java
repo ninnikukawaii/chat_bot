@@ -1,17 +1,78 @@
 package logic.enums;
 
+import logic.User;
 import logic.handlers.PhrasesHandler;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public enum Command implements Serializable {
-    START (PhrasesHandler.getStartCommand()),
-    HELP (PhrasesHandler.getHelpCommand()),
-    EXIT (PhrasesHandler.getExitCommand()),
-    QUIZ (PhrasesHandler.getQuizCommand()),
-    GIVE_UP (PhrasesHandler.getGiveUpCommand()),
-    REPEAT_QUESTION (PhrasesHandler.getRepeatQuestionCommand()),
-    NONE (PhrasesHandler.getNoneCommand());
+    START (PhrasesHandler.getStartCommand()) {
+        @Override
+        public void commandProcessing(User user, List<String> answer) {
+            user.setState(UserState.DIALOG);
+
+            answer.add(PhrasesHandler.getStartPhrase());
+        }
+    },
+    HELP (PhrasesHandler.getHelpCommand()) {
+        @Override
+        public void commandProcessing(User user, List<String> answer) {
+            if (user.getState() == UserState.DIALOG) {
+                answer.add(PhrasesHandler.getHelp());
+            }
+            else if (user.getState() == UserState.QUIZ) {
+                answer.add(PhrasesHandler.getQuizHelp());
+            }
+            else if (user.getState() == UserState.START) {
+                answer.add(PhrasesHandler.getStartHelp());
+            }
+        }
+    },
+    EXIT (PhrasesHandler.getExitCommand()) {
+        @Override
+        public void commandProcessing(User user, List<String> answer) {
+            if (user.getState() == UserState.DIALOG) {
+                user.setState(UserState.EXIT);
+
+                answer.add(PhrasesHandler.getEndPhrase());
+            }
+            else if (user.getState() == UserState.QUIZ) {
+                user.setState(UserState.DIALOG);
+
+                answer.add(PhrasesHandler.getEndQuizPhrase());
+            }
+        }
+    },
+    QUIZ (PhrasesHandler.getQuizCommand()) {
+        @Override
+        public void commandProcessing(User user, List<String> answer) {
+            if (user.getState() == UserState.DIALOG) {
+                user.setState(UserState.QUIZ);
+
+                answer.add(PhrasesHandler.getStartQuizPhrase());
+                user.setGetNewQuestion(true);
+            }
+        }
+    },
+    GIVE_UP (PhrasesHandler.getGiveUpCommand()) {
+        @Override
+        public void commandProcessing(User user, List<String> answer) {
+            if (user.getState() == UserState.QUIZ) {
+                answer.add(PhrasesHandler.getCorrectAnswerInQuiz(user.getLastQuestion().getAnswer()));
+                user.setGetNewQuestion(true);
+            }
+        }
+    },
+    REPEAT_QUESTION (PhrasesHandler.getRepeatQuestionCommand()) {
+        @Override
+        public void commandProcessing(User user, List<String> answer) {
+            if (user.getState() == UserState.QUIZ) {
+                answer.add(user.getLastQuestion().getQuestion());
+            }
+        }
+    };
 
     private final String name;
 
@@ -26,11 +87,13 @@ public enum Command implements Serializable {
                 return command;
             }
         }
-        return NONE;
+        return null;
     }
 
     @Override
     public String toString() {
         return name;
     }
+
+    public abstract void commandProcessing(User user, List<String> answer);
 }
