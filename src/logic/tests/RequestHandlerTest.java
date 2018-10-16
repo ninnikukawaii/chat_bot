@@ -23,7 +23,7 @@ public class RequestHandlerTest {
     private QuestionsData questionsData;
     private RequestHandler requestHandler;
 
-    public void trySetValue() throws FileReadException {
+    private void trySetValue() throws FileReadException {
         questionsData = new QuestionsData(path);
         requestHandler = new RequestHandler(questionsData);
     }
@@ -31,6 +31,7 @@ public class RequestHandlerTest {
     @Test
     public void testExitDialog() throws FileReadException {
         trySetValue();
+        user.setState(UserState.DIALOG);
         List<String> result = requestHandler.getAnswerByCommandAndRequest(Command.EXIT, "none", user);
         assertThat(result, hasItem(PhrasesHandler.getEndPhrase()));
         assertEquals(UserState.EXIT, user.getState());
@@ -48,6 +49,7 @@ public class RequestHandlerTest {
     @Test
     public void testDialogHelp() throws FileReadException {
         trySetValue();
+        user.setState(UserState.DIALOG);
         List<String> result = requestHandler.getAnswerByCommandAndRequest(Command.HELP, "none", user);
         assertThat(result, hasItem(PhrasesHandler.getHelp()));
     }
@@ -55,6 +57,7 @@ public class RequestHandlerTest {
     @Test
     public void testQuiz() throws FileReadException {
         trySetValue();
+        user.setState(UserState.DIALOG);
         List<String> result = requestHandler.getAnswerByCommandAndRequest(Command.QUIZ, "none", user);
         assertThat(result, hasItem(PhrasesHandler.getStartQuizPhrase()));
         assertEquals(UserState.QUIZ, user.getState());
@@ -91,8 +94,8 @@ public class RequestHandlerTest {
         trySetValue();
         user.setState(UserState.QUIZ);
         user.setLastQuestion(new Question("Как называется пятнистая лошадь?", "пинто"));
-        List<String> resultRightAnswer = requestHandler.getAnswerByCommandAndRequest(Command.NONE, "пинто", user);
-        List<String> resultWrongAnswer = requestHandler.getAnswerByCommandAndRequest(Command.NONE, "вороная", user);
+        List<String> resultRightAnswer = requestHandler.getAnswerByCommandAndRequest(null, "пинто", user);
+        List<String> resultWrongAnswer = requestHandler.getAnswerByCommandAndRequest(null, "вороная", user);
         assertThat(resultRightAnswer, hasItem(PhrasesHandler.getCorrectAnswerPhrase()));
         assertThat(resultWrongAnswer, hasItem(PhrasesHandler.getIncorrectAnswerPhrase()));
     }
@@ -100,7 +103,7 @@ public class RequestHandlerTest {
     @Test
     public void testIncorrectPhrase() throws FileReadException {
         trySetValue();
-        List<String> result = requestHandler.getAnswerByCommandAndRequest(Command.NONE, "none", user);
+        List<String> result = requestHandler.getAnswerByCommandAndRequest(null, "none", user);
         assertThat(result, hasItem(PhrasesHandler.getUnknownPhrase()));
     }
 }
