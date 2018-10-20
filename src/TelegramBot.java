@@ -8,12 +8,26 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class TelegramBot extends TelegramLongPollingBot implements Input, Output {
     private ArrayDeque<Request> requests = new ArrayDeque<>();
+    private String botUsername;
+    private String botToken;
+
+    public TelegramBot() throws IOException {
+        Properties props = new Properties();
+
+        props.load(new FileInputStream("config.properties"));
+        this.botUsername = props.getProperty("botUsername");
+        this.botToken = props.getProperty("botToken");
+    }
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -23,12 +37,12 @@ public class TelegramBot extends TelegramLongPollingBot implements Input, Output
 
     @Override
     public String getBotUsername() {
-        return "S_E_L_L_E_R_BOT";
+        return botUsername;
     }
 
     @Override
     public String getBotToken() {
-        return "601890516:AAHpRCZLvBgq8cOvtwkupUfyxVD1-lEOncg";
+        return botToken;
     }
 
     @Override
