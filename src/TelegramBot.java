@@ -21,10 +21,7 @@ public class TelegramBot extends TelegramLongPollingBot implements Input, Output
     private String botUsername;
     private String botToken;
 
-    public TelegramBot() throws IOException {
-        Properties props = new Properties();
-
-        props.load(new FileInputStream("config.properties"));
+    public TelegramBot(Properties props) throws IOException {
         this.botUsername = props.getProperty("botUsername");
         this.botToken = props.getProperty("botToken");
     }
