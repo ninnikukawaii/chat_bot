@@ -4,7 +4,6 @@ import logic.User;
 import logic.handlers.PhrasesHandler;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public enum Command implements Serializable {

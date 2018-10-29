@@ -64,6 +64,5 @@ public class TelegramBot extends TelegramLongPollingBot implements Input, Output
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
-
     }
 }
