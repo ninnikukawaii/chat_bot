@@ -7,6 +7,7 @@
 
 
 правки
+<<<<<<< HEAD
 - токен и имя бота в конфиги +
 - input убрать hasRequests и возвращать null +
 - MainLoop: hashmap и arraylist +
