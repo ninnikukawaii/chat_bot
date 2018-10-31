@@ -10,7 +10,7 @@ public class PhrasesHandler {
     }
 
     public static String getHelpCommand() {
-        return "Помощь";
+        return "/help";
     }
 
     public static String getExitCommand() {
@@ -21,8 +21,16 @@ public class PhrasesHandler {
         return "Викторина";
     }
 
+    public static String getEndDialogCommand() {
+        return "/exit";
+    }
+
+    public static String getStartCommand() {
+        return "/start";
+    }
+
     public static String getStartQuizPhrase() {
-        return "Давайте сыграем в викторину! Если есть вопросы, то скажите \"Помощь\"";
+        return "Давайте сыграем в викторину! Если есть вопросы, то скажите: " + getHelpCommand();
     }
 
     public static String getQuestionOnQuiz(String qiestion) {
@@ -55,8 +63,9 @@ public class PhrasesHandler {
                 "\nЧтобы выйти из викторины скажите \"Выход\"";
     }
 
-    public static String getHelp() {
-        return "Помощь - вызвать справку\nВыход - выйти из чата\nВикторина - начать викторину";
+    public static String getDialogHelp() {
+        return String.format("%s - вызвать справку\n%s - выйти из чата\n%s - начать викторину\n%s - выйти из чата в любой момент",
+                getHelpCommand(), getExitCommand(), getQuizCommand(), getEndDialogCommand());
     }
 
     public static String getGiveUpCommand() {
@@ -71,11 +80,9 @@ public class PhrasesHandler {
         return "NONE";
     }
 
-    public static String getStartCommand() {
-        return "/start";
-    }
-
     public static String getStartHelp() {
         return "Для начала диалога введите: \"" + getStartCommand() + "\" (без кавычек)";
     }
+
+
 }

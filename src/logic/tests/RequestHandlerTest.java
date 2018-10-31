@@ -51,7 +51,7 @@ public class RequestHandlerTest {
         trySetValue();
         user.setState(UserState.DIALOG);
         List<String> result = requestHandler.getAnswerByCommandAndRequest(Command.HELP, "none", user);
-        assertThat(result, hasItem(PhrasesHandler.getHelp()));
+        assertThat(result, hasItem(PhrasesHandler.getDialogHelp()));
     }
 
     @Test
@@ -87,6 +87,21 @@ public class RequestHandlerTest {
         user.setLastQuestion(new Question("Как называется пятнистая лошадь?", "пинто"));
         List<String> result = requestHandler.getAnswerByCommandAndRequest(Command.REPEAT_QUESTION, "none", user);
         assertThat(result, hasItem(user.getLastQuestion().getQuestion()));
+    }
+
+    @Test
+    public void testEndDialog() throws FileReadException {
+        trySetValue();
+
+        testEndDialogWithInitialState(UserState.START);
+        testEndDialogWithInitialState(UserState.DIALOG);
+        testEndDialogWithInitialState(UserState.QUIZ);
+    }
+
+    private void testEndDialogWithInitialState(UserState state) {
+        user.setState(state);
+        requestHandler.getAnswerByCommandAndRequest(Command.END_DIALOG, "none", user);
+        assertEquals(UserState.EXIT, user.getState());
     }
 
     @Test
