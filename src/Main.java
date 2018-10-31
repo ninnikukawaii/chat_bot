@@ -17,11 +17,11 @@ public class Main {
 
         Properties props = new Properties();
         props.load(new FileInputStream("config.properties"));
-        TelegramBot bot = new TelegramBot(props);
+        //TelegramBot bot = new TelegramBot(props);
 
-        botapi.registerBot(bot);
+        //botapi.registerBot(bot);
 
         MainLoop mainLoop = new MainLoop();
-        mainLoop.startLoop(bot, bot);
+        mainLoop.startLoop(new ScannerInput(), new ConsoleOutput());
     }
 }

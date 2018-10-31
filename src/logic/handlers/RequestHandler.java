@@ -20,7 +20,7 @@ public class RequestHandler {
         List<String> answer = new ArrayList<>();
 
         if (command != null) {
-            command.commandProcessing(user, answer);
+            answer.addAll(command.commandProcessing(user));
         }
         else {
             requestProcessing(request, user, answer);
