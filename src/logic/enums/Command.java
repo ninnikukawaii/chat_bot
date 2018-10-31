@@ -24,15 +24,8 @@ public enum Command implements Serializable {
         public List<String> commandProcessing(User user) {
             List<String> answer = new ArrayList<>();
 
-            if (user.getState() == UserState.DIALOG) {
-                answer.add(PhrasesHandler.getDialogHelp());
-            }
-            else if (user.getState() == UserState.QUIZ) {
-                answer.add(PhrasesHandler.getQuizHelp());
-            }
-            else if (user.getState() == UserState.START) {
-                answer.add(PhrasesHandler.getStartHelp());
-            }
+            answer.add(user.getState().getHelp());
+
             return answer;
         }
     },
