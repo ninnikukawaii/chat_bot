@@ -15,4 +15,4 @@
 - Обработка показа команд через "/"
 - Изменение вида некоторых команд к телеграмовскому типу +
 - обработку help вынести в стейт +
-- интерфейс для commandProcessing и requestProcessing $
+- интерфейс для applicationProcessing и requestProcessing $

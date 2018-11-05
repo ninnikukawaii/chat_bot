@@ -5,11 +5,12 @@ import logic.QuestionsData;
 import logic.User;
 import logic.enums.Command;
 import logic.enums.UserState;
+import logic.interfaces.Processing;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestHandler {
+public class RequestHandler implements Processing {
     private QuestionsData mQuestionData;
 
     public RequestHandler(QuestionsData questionsData){
@@ -20,10 +21,10 @@ public class RequestHandler {
         List<String> answer = new ArrayList<>();
 
         if (command != null) {
-            answer.addAll(command.commandProcessing(user));
+            answer.addAll(command.applicationProcessing(null, user));
         }
         else {
-            requestProcessing(request, user, answer);
+            answer = applicationProcessing(request, user);
         }
 
         usersFlagsProcessing(user, answer);
@@ -39,14 +40,22 @@ public class RequestHandler {
     }
 
     private void usersFlagsProcessing(User user, List<String> answer) {
-        if (user.isGetNewQuestion()) {
-            user.setGetNewQuestion(false);
+        if (user.isNewQuestion()) {
+            user.setNewQuestion(false);
 
             answer.add(getQuestion(user));
         }
     }
 
-    private void requestProcessing(String request, User user, List<String> answer) {
+    private String getQuestion(User user) {
+        Question question = mQuestionData.getQuestion();
+        user.setLastQuestion(question);
+        return PhrasesHandler.getQuestionOnQuiz(question.getQuestion());
+    }
+
+    @Override
+    public ArrayList<String> applicationProcessing(String request, User user) {
+        ArrayList<String> answer = new ArrayList<>();
         if (user.getState() == UserState.QUIZ) {
             if (request.toLowerCase().equals(user.getLastQuestion().getAnswer().toLowerCase())) {
                 answer.add(PhrasesHandler.getCorrectAnswerPhrase());
@@ -56,11 +65,6 @@ public class RequestHandler {
                 answer.add(PhrasesHandler.getIncorrectAnswerPhrase());
             }
         }
-    }
-
-    private String getQuestion(User user) {
-        Question question = mQuestionData.getQuestion();
-        user.setLastQuestion(question);
-        return PhrasesHandler.getQuestionOnQuiz(question.getQuestion());
+        return answer;
     }
 }
