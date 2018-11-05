@@ -1,7 +1,7 @@
 package logic.tests;
 
 import logic.Question;
-import logic.QuestionsData;
+import logic.interfaces.QuestionsData;
 import logic.User;
 import logic.enums.Command;
 import logic.enums.UserState;
@@ -17,14 +17,13 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 public class RequestHandlerTest {
-    private String path = "testQuestions.txt";
     private User user = new User(0L);
     private QuestionsData questionsData;
     private RequestHandler requestHandler;
 
     @Before
     public void setUp() throws Exception {
-        questionsData = new QuestionsData(path);
+        questionsData = new TestData();
         requestHandler = new RequestHandler(questionsData);
     }
 
