@@ -3,11 +3,10 @@ package logic.enums;
 import logic.User;
 import logic.handlers.PhrasesHandler;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum Command implements Serializable {
+public enum Command {
     START (PhrasesHandler.getStartCommand()) {
         @Override
         public List<String> commandProcessing(User user) {

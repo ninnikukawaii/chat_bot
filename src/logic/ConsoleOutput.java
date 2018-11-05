@@ -2,7 +2,6 @@ package logic;
 
 import logic.interfaces.Output;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ConsoleOutput implements Output {

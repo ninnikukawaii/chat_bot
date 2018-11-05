@@ -1,6 +1,4 @@
-import logic.ConsoleOutput;
 import logic.MainLoop;
-import logic.ScannerInput;
 import logic.exception.FileReadException;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;

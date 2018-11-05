@@ -3,12 +3,10 @@ package logic;
 import logic.enums.Command;
 import logic.enums.UserState;
 import logic.exception.FileReadException;
-import logic.handlers.PhrasesHandler;
 import logic.handlers.RequestHandler;
 import logic.interfaces.Input;
 import logic.interfaces.Output;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
