@@ -7,14 +7,10 @@ import logic.interfaces.Processing;
 import java.util.ArrayList;
 import java.util.List;
 
-<<<<<<< HEAD
-public enum Command {
-=======
-public enum Command implements Serializable, Processing {
->>>>>>> bf913f8e3ea0c807f01c14c45a92d1e63af6d88d
+public enum Command implements Processing {
     START (PhrasesHandler.getStartCommand()) {
         @Override
-        public List<String> applicationProcessing(String request, User user) {
+        public List<String> requestProcessing(String request, User user) {
             List<String> answer = new ArrayList<>();
 
             user.setState(UserState.DIALOG);
@@ -25,7 +21,7 @@ public enum Command implements Serializable, Processing {
     },
     HELP (PhrasesHandler.getHelpCommand()) {
         @Override
-        public List<String> applicationProcessing(String request, User user) {
+        public List<String> requestProcessing(String request, User user) {
             List<String> answer = new ArrayList<>();
 
             answer.add(user.getState().getHelp());
@@ -35,7 +31,7 @@ public enum Command implements Serializable, Processing {
     },
     EXIT (PhrasesHandler.getExitCommand()) {
         @Override
-        public List<String> applicationProcessing(String request, User user) {
+        public List<String> requestProcessing(String request, User user) {
             List<String> answer = new ArrayList<>();
 
             if (user.getState() == UserState.DIALOG) {
@@ -53,7 +49,7 @@ public enum Command implements Serializable, Processing {
     },
     QUIZ (PhrasesHandler.getQuizCommand()) {
         @Override
-        public List<String> applicationProcessing(String request, User user) {
+        public List<String> requestProcessing(String request, User user) {
             List<String> answer = new ArrayList<>();
 
             if (user.getState() == UserState.DIALOG) {
@@ -67,7 +63,7 @@ public enum Command implements Serializable, Processing {
     },
     GIVE_UP (PhrasesHandler.getGiveUpCommand()) {
         @Override
-        public List<String> applicationProcessing(String request, User user) {
+        public List<String> requestProcessing(String request, User user) {
             List<String> answer = new ArrayList<>();
 
             if (user.getState() == UserState.QUIZ) {
@@ -79,7 +75,7 @@ public enum Command implements Serializable, Processing {
     },
     REPEAT_QUESTION (PhrasesHandler.getRepeatQuestionCommand()) {
         @Override
-        public List<String> applicationProcessing(String request, User user) {
+        public List<String> requestProcessing(String request, User user) {
             List<String> answer = new ArrayList<>();
 
             if (user.getState() == UserState.QUIZ) {
@@ -90,7 +86,7 @@ public enum Command implements Serializable, Processing {
     },
     END_DIALOG (PhrasesHandler.getEndDialogCommand()) {
         @Override
-        public List<String> applicationProcessing(String request, User user) {
+        public List<String> requestProcessing(String request, User user) {
             List<String> answer = new ArrayList<>();
 
             user.setState(UserState.EXIT);
@@ -121,5 +117,5 @@ public enum Command implements Serializable, Processing {
     }
 
     @Override
-    public abstract List<String> applicationProcessing(String request, User user);
+    public abstract List<String> requestProcessing(String request, User user);
 }

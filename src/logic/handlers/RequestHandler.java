@@ -1,7 +1,7 @@
 package logic.handlers;
 
 import logic.Question;
-import logic.QuestionsData;
+import logic.interfaces.QuestionsData;
 import logic.User;
 import logic.enums.Command;
 import logic.enums.UserState;
@@ -21,10 +21,10 @@ public class RequestHandler implements Processing {
         List<String> answer = new ArrayList<>();
 
         if (command != null) {
-            answer.addAll(command.applicationProcessing(null, user));
+            answer.addAll(command.requestProcessing(null, user));
         }
         else {
-            answer = applicationProcessing(request, user);
+            answer.addAll(requestProcessing(request, user));
         }
 
         usersFlagsProcessing(user, answer);
@@ -54,7 +54,7 @@ public class RequestHandler implements Processing {
     }
 
     @Override
-    public ArrayList<String> applicationProcessing(String request, User user) {
+    public ArrayList<String> requestProcessing(String request, User user) {
         ArrayList<String> answer = new ArrayList<>();
         if (user.getState() == UserState.QUIZ) {
             if (request.toLowerCase().equals(user.getLastQuestion().getAnswer().toLowerCase())) {
