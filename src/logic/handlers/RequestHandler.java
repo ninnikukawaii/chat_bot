@@ -21,7 +21,7 @@ public class RequestHandler implements Processing {
         List<String> answer = new ArrayList<>();
 
         if (command != null) {
-            answer.addAll(command.requestProcessing(null, user));
+            answer.addAll(command.requestProcessing(request, user));
         }
         else {
             answer.addAll(requestProcessing(request, user));

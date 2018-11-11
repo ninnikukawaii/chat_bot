@@ -22,7 +22,7 @@ public class RequestHandlerTest {
     private RequestHandler requestHandler;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         questionsData = new TestData();
         requestHandler = new RequestHandler(questionsData);
     }
