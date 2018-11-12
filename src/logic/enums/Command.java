@@ -10,7 +10,7 @@ import java.util.List;
 public enum Command implements Processor {
     START (PhrasesHandler.getStartCommand()) {
         @Override
-        public List<String> requestProcessing(String request, User user) {
+        public List<String> requestProcessing(User user) {
             List<String> answer = new ArrayList<>();
 
             user.setState(UserState.DIALOG);
@@ -21,7 +21,7 @@ public enum Command implements Processor {
     },
     HELP (PhrasesHandler.getHelpCommand()) {
         @Override
-        public List<String> requestProcessing(String request, User user) {
+        public List<String> requestProcessing(User user) {
             List<String> answer = new ArrayList<>();
 
             answer.add(user.getState().getHelp());
@@ -31,7 +31,7 @@ public enum Command implements Processor {
     },
     EXIT (PhrasesHandler.getExitCommand()) {
         @Override
-        public List<String> requestProcessing(String request, User user) {
+        public List<String> requestProcessing(User user) {
             List<String> answer = new ArrayList<>();
 
             if (user.getState() == UserState.DIALOG) {
@@ -49,33 +49,33 @@ public enum Command implements Processor {
     },
     QUIZ (PhrasesHandler.getQuizCommand()) {
         @Override
-        public List<String> requestProcessing(String request, User user) {
+        public List<String> requestProcessing(User user) {
             List<String> answer = new ArrayList<>();
 
             if (user.getState() == UserState.DIALOG) {
                 user.setState(UserState.QUIZ);
 
                 answer.add(PhrasesHandler.getStartQuizPhrase());
-                user.needNewQuestion(true);
+                user.setNeedNewQuestion(true);
             }
             return answer;
         }
     },
     GIVE_UP (PhrasesHandler.getGiveUpCommand()) {
         @Override
-        public List<String> requestProcessing(String request, User user) {
+        public List<String> requestProcessing(User user) {
             List<String> answer = new ArrayList<>();
 
             if (user.getState() == UserState.QUIZ) {
                 answer.add(PhrasesHandler.getCorrectAnswerInQuiz(user.getLastQuestion().getAnswer()));
-                user.needNewQuestion(true);
+                user.setNeedNewQuestion(true);
             }
             return answer;
         }
     },
     REPEAT_QUESTION (PhrasesHandler.getRepeatQuestionCommand()) {
         @Override
-        public List<String> requestProcessing(String request, User user) {
+        public List<String> requestProcessing(User user) {
             List<String> answer = new ArrayList<>();
 
             if (user.getState() == UserState.QUIZ) {
@@ -86,7 +86,7 @@ public enum Command implements Processor {
     },
     END_DIALOG (PhrasesHandler.getEndDialogCommand()) {
         @Override
-        public List<String> requestProcessing(String request, User user) {
+        public List<String> requestProcessing(User user) {
             List<String> answer = new ArrayList<>();
 
             user.setState(UserState.EXIT);
@@ -117,5 +117,5 @@ public enum Command implements Processor {
     }
 
     @Override
-    public abstract List<String> requestProcessing(String request, User user);
+    public abstract List<String> requestProcessing(User user);
 }

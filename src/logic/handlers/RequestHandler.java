@@ -3,29 +3,22 @@ package logic.handlers;
 import logic.Question;
 import logic.interfaces.QuestionsData;
 import logic.User;
-import logic.enums.Command;
 import logic.enums.UserState;
 import logic.interfaces.Processor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestHandler implements Processor {
+public class RequestHandler {
     private QuestionsData mQuestionData;
 
     public RequestHandler(QuestionsData questionsData){
         mQuestionData = questionsData;
     }
 
-    public List<String> getAnswerByCommandAndRequest(Command command, String request, User user) {
-        List<String> answer = new ArrayList<>();
+    public List<String> getAnswerByProcessor(Processor processor, User user) {
 
-        if (command != null) {
-            answer.addAll(command.requestProcessing(request, user));
-        }
-        else {
-            answer.addAll(requestProcessing(request, user));
-        }
+        List<String> answer = new ArrayList<>(processor.requestProcessing(user));
 
         usersFlagsProcessing(user, answer);
 
@@ -40,8 +33,8 @@ public class RequestHandler implements Processor {
     }
 
     private void usersFlagsProcessing(User user, List<String> answer) {
-        if (user.isNewQuestion()) {
-            user.needNewQuestion(false);
+        if (user.getNeedNewQuestion()) {
+            user.setNeedNewQuestion(false);
 
             answer.add(getQuestion(user));
         }
@@ -51,20 +44,5 @@ public class RequestHandler implements Processor {
         Question question = mQuestionData.getQuestion();
         user.setLastQuestion(question);
         return PhrasesHandler.getQuestionOnQuiz(question.getQuestion());
-    }
-
-    @Override
-    public ArrayList<String> requestProcessing(String request, User user) {
-        ArrayList<String> answer = new ArrayList<>();
-        if (user.getState() == UserState.QUIZ) {
-            if (request.toLowerCase().equals(user.getLastQuestion().getAnswer().toLowerCase())) {
-                answer.add(PhrasesHandler.getCorrectAnswerPhrase());
-                answer.add(getQuestion(user));
-            }
-            else {
-                answer.add(PhrasesHandler.getIncorrectAnswerPhrase());
-            }
-        }
-        return answer;
     }
 }

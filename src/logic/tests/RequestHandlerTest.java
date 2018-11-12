@@ -1,6 +1,7 @@
 package logic.tests;
 
 import logic.Question;
+import logic.RequestProcessor;
 import logic.interfaces.QuestionsData;
 import logic.User;
 import logic.enums.Command;
@@ -30,7 +31,7 @@ public class RequestHandlerTest {
     @Test
     public void testExitDialog() {
         user.setState(UserState.DIALOG);
-        List<String> result = requestHandler.getAnswerByCommandAndRequest(Command.EXIT, "none", user);
+        List<String> result = requestHandler.getAnswerByProcessor(Command.EXIT, user);
         assertThat(result, hasItem(PhrasesHandler.getEndPhrase()));
         assertEquals(UserState.EXIT, user.getState());
     }
@@ -38,7 +39,7 @@ public class RequestHandlerTest {
     @Test
     public void testExitQuiz() {
         user.setState(UserState.QUIZ);
-        List<String> result = requestHandler.getAnswerByCommandAndRequest(Command.EXIT, "none", user);
+        List<String> result = requestHandler.getAnswerByProcessor(Command.EXIT, user);
         assertThat(result, hasItem(PhrasesHandler.getEndQuizPhrase()));
         assertEquals(UserState.DIALOG, user.getState());
     }
@@ -46,14 +47,14 @@ public class RequestHandlerTest {
     @Test
     public void testDialogHelp() {
         user.setState(UserState.DIALOG);
-        List<String> result = requestHandler.getAnswerByCommandAndRequest(Command.HELP, "none", user);
+        List<String> result = requestHandler.getAnswerByProcessor(Command.HELP, user);
         assertThat(result, hasItem(PhrasesHandler.getDialogHelp()));
     }
 
     @Test
     public void testQuiz() {
         user.setState(UserState.DIALOG);
-        List<String> result = requestHandler.getAnswerByCommandAndRequest(Command.QUIZ, "none", user);
+        List<String> result = requestHandler.getAnswerByProcessor(Command.QUIZ, user);
         assertThat(result, hasItem(PhrasesHandler.getStartQuizPhrase()));
         assertEquals(UserState.QUIZ, user.getState());
     }
@@ -61,7 +62,7 @@ public class RequestHandlerTest {
     @Test
     public void testQuizHelp() {
         user.setState(UserState.QUIZ);
-        List<String> result = requestHandler.getAnswerByCommandAndRequest(Command.HELP, "none", user);
+        List<String> result = requestHandler.getAnswerByProcessor(Command.HELP, user);
         assertThat(result, hasItem(PhrasesHandler.getQuizHelp()));
     }
 
@@ -69,7 +70,7 @@ public class RequestHandlerTest {
     public void testGiveUp() {
         user.setState(UserState.QUIZ);
         user.setLastQuestion(new Question("Как называется пятнистая лошадь?", "пинто"));
-        List<String> result = requestHandler.getAnswerByCommandAndRequest(Command.GIVE_UP, "none", user);
+        List<String> result = requestHandler.getAnswerByProcessor(Command.GIVE_UP, user);
         assertThat(result, hasItem("Правильный ответ был: пинто"));
     }
 
@@ -77,12 +78,12 @@ public class RequestHandlerTest {
     public void testRepeatQuestion() {
         user.setState(UserState.QUIZ);
         user.setLastQuestion(new Question("Как называется пятнистая лошадь?", "пинто"));
-        List<String> result = requestHandler.getAnswerByCommandAndRequest(Command.REPEAT_QUESTION, "none", user);
+        List<String> result = requestHandler.getAnswerByProcessor(Command.REPEAT_QUESTION, user);
         assertThat(result, hasItem(user.getLastQuestion().getQuestion()));
     }
 
     @Test
-    public void testEndDialog() throws FileReadException {
+    public void testEndDialog() {
         testEndDialogWithInitialState(UserState.START);
         testEndDialogWithInitialState(UserState.DIALOG);
         testEndDialogWithInitialState(UserState.QUIZ);
@@ -90,7 +91,7 @@ public class RequestHandlerTest {
 
     private void testEndDialogWithInitialState(UserState state) {
         user.setState(state);
-        requestHandler.getAnswerByCommandAndRequest(Command.END_DIALOG, "none", user);
+        requestHandler.getAnswerByProcessor(Command.END_DIALOG, user);
         assertEquals(UserState.EXIT, user.getState());
     }
 
@@ -98,15 +99,15 @@ public class RequestHandlerTest {
     public void testUserAnswers() {
         user.setState(UserState.QUIZ);
         user.setLastQuestion(new Question("Как называется пятнистая лошадь?", "пинто"));
-        List<String> resultRightAnswer = requestHandler.getAnswerByCommandAndRequest(null, "пинто", user);
-        List<String> resultWrongAnswer = requestHandler.getAnswerByCommandAndRequest(null, "вороная", user);
+        List<String> resultRightAnswer = requestHandler.getAnswerByProcessor(new RequestProcessor("пинто"), user);
+        List<String> resultWrongAnswer = requestHandler.getAnswerByProcessor(new RequestProcessor("неверный ответ"), user);
         assertThat(resultRightAnswer, hasItem(PhrasesHandler.getCorrectAnswerPhrase()));
         assertThat(resultWrongAnswer, hasItem(PhrasesHandler.getIncorrectAnswerPhrase()));
     }
 
     @Test
     public void testIncorrectPhrase() {
-        List<String> result = requestHandler.getAnswerByCommandAndRequest(null, "none", user);
+        List<String> result = requestHandler.getAnswerByProcessor(new RequestProcessor("qwerty"), user);
         assertThat(result, hasItem(PhrasesHandler.getUnknownPhrase()));
     }
 }

@@ -6,6 +6,7 @@ import logic.exception.FileReadException;
 import logic.handlers.RequestHandler;
 import logic.interfaces.Input;
 import logic.interfaces.Output;
+import logic.interfaces.Processor;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,8 +40,9 @@ public class MainLoop {
             User user = users.get(id);
 
             Command command = Command.valueByString(request.getUsersRequest());
-            List<String> messages =
-                    requestHandler.getAnswerByCommandAndRequest(command, request.getUsersRequest(), user);
+            Processor processor = (command == null ? new RequestProcessor(request.getUsersRequest()) : command);
+
+            List<String> messages = requestHandler.getAnswerByProcessor(processor, user);
             output.tellUser(messages, user);
 
             if (user.getState() == UserState.EXIT) {
