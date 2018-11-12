@@ -11,12 +11,17 @@ import logic.handlers.PhrasesHandler;
 import logic.handlers.RequestHandler;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.theories.DataPoint;
+import org.junit.experimental.theories.Theories;
+import org.junit.experimental.theories.Theory;
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
+@RunWith(Theories.class)
 public class RequestHandlerTest {
     private User user = new User(0L);
     private QuestionsData questionsData;
@@ -83,19 +88,6 @@ public class RequestHandlerTest {
     }
 
     @Test
-    public void testEndDialog() {
-        testEndDialogWithInitialState(UserState.START);
-        testEndDialogWithInitialState(UserState.DIALOG);
-        testEndDialogWithInitialState(UserState.QUIZ);
-    }
-
-    private void testEndDialogWithInitialState(UserState state) {
-        user.setState(state);
-        requestHandler.getAnswerByProcessor(Command.END_DIALOG, user);
-        assertEquals(UserState.EXIT, user.getState());
-    }
-
-    @Test
     public void testUserAnswers() {
         user.setState(UserState.QUIZ);
         user.setLastQuestion(new Question("Как называется пятнистая лошадь?", "пинто"));
@@ -109,5 +101,19 @@ public class RequestHandlerTest {
     public void testIncorrectPhrase() {
         List<String> result = requestHandler.getAnswerByProcessor(new RequestProcessor("qwerty"), user);
         assertThat(result, hasItem(PhrasesHandler.getUnknownPhrase()));
+    }
+
+    @DataPoint
+    public static UserState START = UserState.START;
+    @DataPoint
+    public static UserState DIALOG = UserState.DIALOG;
+    @DataPoint
+    public static UserState QUIZ = UserState.QUIZ;
+
+    @Theory
+    public void testEndDialogWithInitialState(UserState state) {
+        user.setState(state);
+        requestHandler.getAnswerByProcessor(Command.END_DIALOG, user);
+        assertEquals(UserState.EXIT, user.getState());
     }
 }
