@@ -7,7 +7,7 @@ public class User {
     private Question lastQuestion;
     private Long id;
 
-    private boolean newQuestion = false;
+    private boolean needNewQuestion = false;
 
     public User(Long id) {
         state = UserState.START;
@@ -35,11 +35,11 @@ public class User {
         return id;
     }
 
-    public boolean isNewQuestion() {
-        return newQuestion;
+    public boolean getNeedNewQuestion() {
+        return needNewQuestion;
     }
 
-    public void needNewQuestion(boolean newQuestion) {
-        this.newQuestion = newQuestion;
+    public void setNeedNewQuestion(boolean newQuestion) {
+        this.needNewQuestion = newQuestion;
     }
 }
