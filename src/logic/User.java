@@ -39,7 +39,7 @@ public class User {
         return newQuestion;
     }
 
-    public void setNewQuestion(boolean newQuestion) {
+    public void needNewQuestion(boolean newQuestion) {
         this.newQuestion = newQuestion;
     }
 }

@@ -4,6 +4,6 @@ import logic.User;
 
 import java.util.List;
 
-public interface Processing {
+public interface Processor {
     List<String> requestProcessing(String request, User user);
 }
