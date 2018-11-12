@@ -7,17 +7,9 @@
 
 
 правки
-- Изменение возвращения ArrayList в Command +
-- Переименоване сеттера у User +
-- Убрать конфиги из гит +
-- Свойства принимать в конструктаре бота +
-- Изменить реализацию базы данных для тестов +
-- Обработка показа команд через "/"
-- Изменение вида некоторых команд к телеграмовскому типу +
-- обработку help вынести в стейт +
-- интерфейс для commandProcessing и requestProcessing +
-
-заупскать тест для каждого state (theories?)
-убрать рандом из тестов
-что-то там еще с интерфейсом processor
-изменение обработки хелпа в стейт
+- интерфейс для commandProcessing и requestProcessing (Processor)
+  => Изменения сигнатуры RequestHandler.getAnswerByCommandAndRequest ->
+    List<String> getAnswerByCommandAndRequest(Processor processor, User user) +
+- заупскать тест для каждого state (theories?) +
+- убрать рандом из тестов +
+- изменение обработки хелпа в стейт +
