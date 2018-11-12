@@ -2,31 +2,25 @@ package logic.enums;
 
 import logic.handlers.PhrasesHandler;
 
+import java.util.function.Supplier;
+
 public enum UserState {
-    START {
-        @Override
-        public String getHelp() {
-            return PhrasesHandler.getStartHelp();
-        }
+    START(PhrasesHandler.getStartHelp()) {
     },
-    DIALOG {
-        @Override
-        public String getHelp() {
-            return PhrasesHandler.getDialogHelp();
-        }
+    DIALOG(PhrasesHandler.getDialogHelp()) {
     },
-    QUIZ {
-        @Override
-        public String getHelp() {
-            return PhrasesHandler.getQuizHelp();
-        }
+    QUIZ(PhrasesHandler.getQuizHelp()) {
     },
-    EXIT {
-        @Override
-        public String getHelp() {
-            return null;
-        }
+    EXIT(null) {
     };
 
-    public abstract String getHelp();
+    private String description;
+
+    UserState(String description) {
+        this.description = description;
+    }
+
+    public String getHelp() {
+        return description;
+    };
 }
