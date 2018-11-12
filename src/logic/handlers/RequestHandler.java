@@ -5,12 +5,12 @@ import logic.interfaces.QuestionsData;
 import logic.User;
 import logic.enums.Command;
 import logic.enums.UserState;
-import logic.interfaces.Processing;
+import logic.interfaces.Processor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestHandler implements Processing {
+public class RequestHandler implements Processor {
     private QuestionsData mQuestionData;
 
     public RequestHandler(QuestionsData questionsData){
@@ -41,7 +41,7 @@ public class RequestHandler implements Processing {
 
     private void usersFlagsProcessing(User user, List<String> answer) {
         if (user.isNewQuestion()) {
-            user.setNewQuestion(false);
+            user.needNewQuestion(false);
 
             answer.add(getQuestion(user));
         }

@@ -2,12 +2,12 @@ package logic.enums;
 
 import logic.User;
 import logic.handlers.PhrasesHandler;
-import logic.interfaces.Processing;
+import logic.interfaces.Processor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public enum Command implements Processing {
+public enum Command implements Processor {
     START (PhrasesHandler.getStartCommand()) {
         @Override
         public List<String> requestProcessing(String request, User user) {
@@ -56,7 +56,7 @@ public enum Command implements Processing {
                 user.setState(UserState.QUIZ);
 
                 answer.add(PhrasesHandler.getStartQuizPhrase());
-                user.setNewQuestion(true);
+                user.needNewQuestion(true);
             }
             return answer;
         }
@@ -68,7 +68,7 @@ public enum Command implements Processing {
 
             if (user.getState() == UserState.QUIZ) {
                 answer.add(PhrasesHandler.getCorrectAnswerInQuiz(user.getLastQuestion().getAnswer()));
-                user.setNewQuestion(true);
+                user.needNewQuestion(true);
             }
             return answer;
         }
