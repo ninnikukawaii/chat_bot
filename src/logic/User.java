@@ -2,17 +2,31 @@ package logic;
 
 import logic.enums.UserState;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class User {
     private UserState state;
     private Question lastQuestion;
+    @Id
     private Long id;
 
     private boolean needNewQuestion = false;
 
     public User(Long id) {
+        initialize();
+        this.id = id;
+    }
+
+    public User() {
+        initialize();
+        id = 0L;
+    }
+
+    private void initialize() {
         state = UserState.START;
         lastQuestion = null;
-        this.id = id;
     }
 
     public UserState getState(){

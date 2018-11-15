@@ -23,7 +23,7 @@ import static org.hamcrest.CoreMatchers.*;
 
 @RunWith(Theories.class)
 public class RequestHandlerTest {
-    private User user = new User(0L);
+    private User user = new User();
     private QuestionsData questionsData;
     private RequestHandler requestHandler;
 

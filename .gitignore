@@ -23,6 +23,7 @@
 hs_err_pid*
 
 # IDE settings
+target/
 .idea/
 out/
 chat_bot.iml
