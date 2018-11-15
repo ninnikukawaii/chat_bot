@@ -18,7 +18,7 @@ public class MainLoop {
     private Map<Long, User> users = new HashMap<>();
 
     public MainLoop() throws FileReadException {
-        QuestionsData questionsData = new QuestionsData("questions.txt");
+        QuestionsData questionsData = new QuestionsData("resources/questions.txt");
 
         requestHandler = new RequestHandler(questionsData);
     }

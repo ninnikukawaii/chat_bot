@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 public class QuestionsDataTest {
-    private String pathToCorrectQuestions = "testQuestions.txt";
+    private String pathToCorrectQuestions = "resources/testQuestions.txt";
 
     @Test
     public void testQuestionBase() throws FileReadException {
