@@ -1,6 +1,8 @@
 package logic;
 
-public class Question {
+import java.io.Serializable;
+
+public class Question implements Serializable {
     private String mQuestion;
     private String mAnswer;
 
@@ -24,5 +26,10 @@ public class Question {
             return question.mQuestion.equals(mQuestion) && question.mAnswer.equals(mAnswer);
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return getQuestion() + '~' + getAnswer();
     }
 }
