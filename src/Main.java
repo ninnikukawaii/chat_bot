@@ -14,7 +14,7 @@ public class Main {
         TelegramBotsApi botapi = new TelegramBotsApi();
 
         Properties props = new Properties();
-        props.load(new FileInputStream("config.properties"));
+        props.load(new FileInputStream("resources/config.properties"));
         TelegramBot bot = new TelegramBot(props);
 
         botapi.registerBot(bot);
