@@ -15,12 +15,13 @@ import java.util.Map;
 public class MainLoop {
 
     private RequestHandler requestHandler;
-    private Map<Long, User> users = new HashMap<>();
+    private DataBaseManager dataBaseManager;
 
     public MainLoop() throws FileReadException {
         QuestionsData questionsData = new QuestionsData("resources/questions.txt");
 
         requestHandler = new RequestHandler(questionsData);
+        dataBaseManager = DataBaseManager.getInstance("chat-bot");
     }
 
     public void startLoop(Input input, Output output) throws InterruptedException {
@@ -34,10 +35,15 @@ public class MainLoop {
 
             Long id = request.getUserId();
 
-            if (!users.containsKey(request.getUserId())) {
-                users.put(id, new User(id));
+            User user = dataBaseManager.getUserById(id);
+            if (user == null) {
+                dataBaseManager.createNewUser(new User(id));
+                user = dataBaseManager.getUserById(id);
             }
-            User user = users.get(id);
+
+            if (user.getState() == UserState.EXIT) {
+                user = new User(user.getId());
+            }
 
             Command command = Command.valueByString(request.getUsersRequest());
             Processor processor = (command == null ? new RequestProcessor(request.getUsersRequest()) : command);
@@ -45,9 +51,7 @@ public class MainLoop {
             List<String> messages = requestHandler.getAnswerByProcessor(processor, user);
             output.tellUser(messages, user);
 
-            if (user.getState() == UserState.EXIT) {
-                users.remove(id);
-            }
+            dataBaseManager.updateDataAboutUser(user);
         }
     }
 }
