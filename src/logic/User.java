@@ -2,17 +2,20 @@ package logic;
 
 import logic.enums.UserState;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class User {
+    @Enumerated(EnumType.STRING)
     private UserState state;
     private Question lastQuestion;
     @Id
     private Long id;
 
-    private boolean needNewQuestion = false;
+    public static final Long defaultId = 1L;
+
+    transient private boolean needNewQuestion = false;
 
     public User(Long id) {
         initialize();
@@ -21,7 +24,7 @@ public class User {
 
     public User() {
         initialize();
-        id = 0L;
+        id = defaultId;
     }
 
     private void initialize() {
@@ -55,5 +58,20 @@ public class User {
 
     public void setNeedNewQuestion(boolean newQuestion) {
         this.needNewQuestion = newQuestion;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return state == user.state &&
+                Objects.equals(lastQuestion, user.lastQuestion) &&
+                Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(state, lastQuestion, id);
     }
 }
