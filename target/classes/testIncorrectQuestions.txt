@@ -1,2 +1,0 @@
-CorrectQuestion~True
-IncorrectQuestion-True
