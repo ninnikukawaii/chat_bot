@@ -20,7 +20,7 @@ public enum UserState {
         this.description = description;
     }
 
-    public String getHelp() {
+    public String getDescription() {
         return description;
     };
 }

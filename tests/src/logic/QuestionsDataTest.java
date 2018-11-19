@@ -1,4 +1,4 @@
-package logic.tests;
+package logic;
 
 import logic.Question;
 import logic.QuestionsData;

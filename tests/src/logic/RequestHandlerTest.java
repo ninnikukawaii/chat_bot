@@ -1,12 +1,8 @@
-package logic.tests;
+package logic;
 
-import logic.Question;
-import logic.RequestProcessor;
 import logic.interfaces.QuestionsData;
-import logic.User;
 import logic.enums.Command;
 import logic.enums.UserState;
-import logic.exception.FileReadException;
 import logic.handlers.PhrasesHandler;
 import logic.handlers.RequestHandler;
 import org.junit.Before;

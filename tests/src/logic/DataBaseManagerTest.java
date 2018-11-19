@@ -1,4 +1,4 @@
-package logic.tests;
+package logic;
 
 import logic.DataBaseManager;
 import logic.Question;
@@ -17,12 +17,12 @@ public class DataBaseManagerTest {
 
     @Before
     public void setUp() {
-        dataBaseManager = DataBaseManager.getInstance("testUnit");
+        dataBaseManager = new DataBaseManager("testUnit");
     }
 
     @After
     public void tearDown() {
-        dataBaseManager.reinitialization();
+        dataBaseManager.close();
     }
 
     @Test

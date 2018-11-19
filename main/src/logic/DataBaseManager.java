@@ -12,7 +12,7 @@ public class DataBaseManager {
 
     private String persistenceUnitName;
 
-    private DataBaseManager(String persistenceUnitName) {
+    DataBaseManager(String persistenceUnitName) {
         this.persistenceUnitName = persistenceUnitName;
         initialization();
     }

@@ -24,7 +24,7 @@ public enum Command implements Processor {
         public List<String> requestProcessing(User user) {
             List<String> answer = new ArrayList<>();
 
-            answer.add(user.getState().getHelp());
+            answer.add(user.getState().getDescription());
 
             return answer;
         }
