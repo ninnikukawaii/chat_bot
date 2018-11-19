@@ -114,4 +114,16 @@ public class DataBaseManagerTest {
         User userFromDB = dataBaseManager.getUserById(User.defaultId);
         assertEquals(user.getState(), userFromDB.getState());
     }
+
+    @Test
+    public void savedQuestionIsCorrect() {
+        User user = new User();
+        Question question = new Question("question", "answer");
+        user.setLastQuestion(question);
+
+        dataBaseManager.createNewUser(user);
+        User userFromDB = dataBaseManager.getUserById(User.defaultId);
+        
+        assertEquals(userFromDB.getLastQuestion(), user.getLastQuestion());
+    }
 }

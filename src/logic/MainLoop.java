@@ -17,11 +17,11 @@ public class MainLoop {
     private RequestHandler requestHandler;
     private DataBaseManager dataBaseManager;
 
-    public MainLoop() throws FileReadException {
+    public MainLoop(DataBaseManager dataBaseManager) throws FileReadException {
         QuestionsData questionsData = new QuestionsData("resources/questions.txt");
 
         requestHandler = new RequestHandler(questionsData);
-        dataBaseManager = DataBaseManager.getInstance("chat-bot");
+        this.dataBaseManager = dataBaseManager;
     }
 
     public void startLoop(Input input, Output output) throws InterruptedException {

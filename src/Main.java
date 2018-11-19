@@ -1,3 +1,4 @@
+import logic.DataBaseManager;
 import logic.MainLoop;
 import logic.exception.FileReadException;
 import org.telegram.telegrambots.ApiContextInitializer;
@@ -19,7 +20,9 @@ public class Main {
 
         botapi.registerBot(bot);
 
-        MainLoop mainLoop = new MainLoop();
+        DataBaseManager dataBaseManager = DataBaseManager.getInstance("chat-bot");
+
+        MainLoop mainLoop = new MainLoop(dataBaseManager);
         mainLoop.startLoop(bot, bot);
     }
 }
