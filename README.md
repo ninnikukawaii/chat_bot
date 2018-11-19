@@ -1,21 +1,19 @@
 # chat_bot
-Формулировка второй задачи
-Бот общается с пользователями через Telegram. 
-Логика Telegram отделена от логики самого бота.
-В чем сложность и интерес:
-- поддерка ботом возможностей Telegram 
-
-
-правки
-- интерфейс для commandProcessing и requestProcessing (Processor)
-  => Изменения сигнатуры RequestHandler.getAnswerByCommandAndRequest ->
-    List<String> getAnswerByCommandAndRequest(Processor processor, User user) +
-- заупскать тест для каждого state (theories?) +
-- убрать рандом из тестов +
-- изменение обработки хелпа в стейт +
-
 Формулировка третьей задачи
 Хранение данных о пользователях осуществяется с использованием базы данных
 MySQL.
 В чем сложность и интерес:
 - работа с базой данных
+
+
+правки
+- request handler test где dataPoint сделать dataPoints и проходить по массивам стейтов
+- getDescription 
+- DataBaseManager 
+        - createNewUser передавать ID (ид снаружи) и конструктор юзер перенести внутрь
+        - updateDataAboutUser убрать транзакцию
+        - getInstance в основном коде использовать, для тестов делать отдельный конструктор
+        (изменить структуру пакетов)
+        - изменить тест про secondDatabase - два раза вызвать getInstance и проверить идентичность
+- createNewUser возвращать ID ?
+- поправить работу с юзерами в рамки одной транзакции: собрать все обновления и только потом коммитить
