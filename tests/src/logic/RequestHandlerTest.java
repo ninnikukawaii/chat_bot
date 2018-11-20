@@ -7,11 +7,12 @@ import logic.handlers.PhrasesHandler;
 import logic.handlers.RequestHandler;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.theories.DataPoint;
+import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -99,12 +100,8 @@ public class RequestHandlerTest {
         assertThat(result, hasItem(PhrasesHandler.getUnknownPhrase()));
     }
 
-    @DataPoint
-    public static UserState START = UserState.START;
-    @DataPoint
-    public static UserState DIALOG = UserState.DIALOG;
-    @DataPoint
-    public static UserState QUIZ = UserState.QUIZ;
+    @DataPoints
+    public static List<UserState> states = Arrays.asList(UserState.START, UserState.DIALOG, UserState.QUIZ);
 
     @Theory
     public void testEndDialogWithInitialState(UserState state) {
