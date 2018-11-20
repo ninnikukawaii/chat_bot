@@ -2,6 +2,7 @@ package logic;
 
 import logic.enums.Command;
 import logic.enums.UserState;
+import logic.exception.DataBaseException;
 import logic.exception.FileReadException;
 import logic.handlers.RequestHandler;
 import logic.interfaces.Input;
@@ -24,7 +25,7 @@ public class MainLoop {
         this.dataBaseManager = dataBaseManager;
     }
 
-    public void startLoop(Input input, Output output) throws InterruptedException {
+    public void startLoop(Input input, Output output) throws InterruptedException, DataBaseException {
         while (true) {
             Thread.sleep(10);
 
@@ -35,15 +36,13 @@ public class MainLoop {
 
             Long id = request.getUserId();
 
-            User user = dataBaseManager.getUserById(id);
-            if (user == null) {
-                dataBaseManager.createNewUser(new User(id));
-                user = dataBaseManager.getUserById(id);
-            }
+            dataBaseManager.beginTransaction();
+            User user = dataBaseManager.createNewUser(id);
 
             if (user.getState() == UserState.EXIT) {
                 user = new User(user.getId());
             }
+            dataBaseManager.updateDataAboutUser(user);
 
             Command command = Command.valueByString(request.getUsersRequest());
             Processor processor = (command == null ? new RequestProcessor(request.getUsersRequest()) : command);
@@ -52,6 +51,7 @@ public class MainLoop {
             output.tellUser(messages, user);
 
             dataBaseManager.updateDataAboutUser(user);
+            dataBaseManager.endTransaction();
         }
     }
 }
