@@ -1,9 +1,7 @@
 package logic;
 
-import logic.DataBaseManager;
-import logic.Question;
-import logic.User;
 import logic.enums.UserState;
+import logic.exception.DataBaseException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,30 +16,31 @@ public class DataBaseManagerTest {
     @Before
     public void setUp() {
         dataBaseManager = new DataBaseManager("testUnit");
+        dataBaseManager.beginTransaction();
     }
 
     @After
-    public void tearDown() {
+    public void tearDown() throws DataBaseException {
+        dataBaseManager.endTransaction();
         dataBaseManager.close();
     }
 
     @Test
     public void getSecondDataBaseManager() {
-        DataBaseManager secondDataBaseManager = DataBaseManager.getInstance("testUnit");
+        DataBaseManager firstDataBaseManager = DataBaseManager.getInstance();
+        DataBaseManager secondDataBaseManager = DataBaseManager.getInstance();
 
-        assertEquals(dataBaseManager, secondDataBaseManager);
+        assertEquals(firstDataBaseManager, secondDataBaseManager);
     }
 
     @Test
     public void appendNewUser() {
-        User user = new User();
-        dataBaseManager.createNewUser(user);
+        dataBaseManager.createNewUser(User.defaultId);
     }
 
     @Test
     public void getUserFromDataBase() {
-        User user = new User();
-        dataBaseManager.createNewUser(user);
+        User user = dataBaseManager.createNewUser(User.defaultId);
 
         User userFromDB = dataBaseManager.getUserById(User.defaultId);
         assertEquals(user, userFromDB);
@@ -49,13 +48,12 @@ public class DataBaseManagerTest {
 
     @Test
     public void appendTwoEqualUser() {
-        User user = new User();
-
-        dataBaseManager.createNewUser(user);
-        dataBaseManager.createNewUser(user);
+        User firstUser = dataBaseManager.createNewUser(User.defaultId);
+        User secondUser = dataBaseManager.createNewUser(User.defaultId);
 
         User userFromDB =  dataBaseManager.getUserById(User.defaultId);
-        assertEquals(user, userFromDB);
+        assertEquals(firstUser, secondUser);
+        assertEquals(firstUser, userFromDB);
     }
 
     @Test
@@ -63,8 +61,7 @@ public class DataBaseManagerTest {
         Long firstId = 10L;
         Long secondId = 11L;
 
-        User user = new User(firstId);
-        dataBaseManager.createNewUser(user);
+        dataBaseManager.createNewUser(firstId);
 
         User userFromDB = dataBaseManager.getUserById(secondId);
 
@@ -73,11 +70,10 @@ public class DataBaseManagerTest {
 
     @Test
     public void appendTwoUsers() {
-        User firstUser = new User(9L);
-        User secondUser = new User(10L);
+        User firstUser = dataBaseManager.createNewUser(9L);
+        User secondUser = dataBaseManager.createNewUser(10L);
 
-        dataBaseManager.createNewUser(firstUser);
-        dataBaseManager.createNewUser(secondUser);
+        assertNotEquals(firstUser, secondUser);
     }
 
     @Test
@@ -85,11 +81,8 @@ public class DataBaseManagerTest {
         Long firstId = 10L;
         Long secondId = 11L;
 
-        User firstUser = new User(firstId);
-        User secondUser = new User(secondId);
-
-        dataBaseManager.createNewUser(firstUser);
-        dataBaseManager.createNewUser(secondUser);
+        User firstUser = dataBaseManager.createNewUser(firstId);
+        User secondUser = dataBaseManager.createNewUser(secondId);
 
         User firstUserFromDB = dataBaseManager.getUserById(firstId);
         User secondUserFromDB = dataBaseManager.getUserById(secondId);
@@ -105,8 +98,7 @@ public class DataBaseManagerTest {
 
     @Test
     public void updateUser() {
-        User user = new User();
-        dataBaseManager.createNewUser(user);
+        User user = dataBaseManager.createNewUser(User.defaultId);
 
         user.setState(UserState.QUIZ);
         dataBaseManager.updateDataAboutUser(user);
@@ -117,11 +109,12 @@ public class DataBaseManagerTest {
 
     @Test
     public void savedQuestionIsCorrect() {
-        User user = new User();
+        User user = dataBaseManager.createNewUser(User.defaultId);
+
         Question question = new Question("question", "answer");
         user.setLastQuestion(question);
+        dataBaseManager.updateDataAboutUser(user);
 
-        dataBaseManager.createNewUser(user);
         User userFromDB = dataBaseManager.getUserById(User.defaultId);
         
         assertEquals(userFromDB.getLastQuestion(), user.getLastQuestion());
