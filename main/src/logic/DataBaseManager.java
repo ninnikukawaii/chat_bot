@@ -13,16 +13,9 @@ public class DataBaseManager {
     private EntityManager entityManager;
     private EntityTransaction entityTransaction;
 
-    private String persistenceUnitName;
-
     private static final String defaultPersistenceUnitName = "chat-bot";
 
     DataBaseManager(String persistenceUnitName) {
-        this.persistenceUnitName = persistenceUnitName;
-        initialization();
-    }
-
-    private void initialization() {
         entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnitName);
         entityManager = entityManagerFactory.createEntityManager();
     }
@@ -37,10 +30,11 @@ public class DataBaseManager {
             throw new DataBaseException("Transaction don't began");
         }
         entityTransaction.commit();
+        entityTransaction = null;
     }
 
-    public User createNewUser(Long id) {
-        User user = getUserById(id);
+    public User getNewUser(Long id) {
+        User user = findUserById(id);
 
         if (user == null) {
             user = new User(id);
@@ -50,13 +44,14 @@ public class DataBaseManager {
         return user;
     }
 
-    public User getUserById(Long id) {
+    public User findUserById(Long id) {
 
         return entityManager.find(User.class, id);
     }
 
-    public void updateDataAboutUser(User user) {
-        entityManager.merge(user);
+    public User recreateUser(Long id) {
+        User user = new User(id);
+        return entityManager.merge(user);
     }
 
     public void close() {
