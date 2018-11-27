@@ -9,9 +9,7 @@ import logic.interfaces.Input;
 import logic.interfaces.Output;
 import logic.interfaces.Processor;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MainLoop {
 
@@ -37,12 +35,11 @@ public class MainLoop {
             Long id = request.getUserId();
 
             dataBaseManager.beginTransaction();
-            User user = dataBaseManager.createNewUser(id);
+            User user = dataBaseManager.getNewUser(id);
 
             if (user.getState() == UserState.EXIT) {
-                user = new User(user.getId());
+                user = dataBaseManager.recreateUser(user.getId());
             }
-            dataBaseManager.updateDataAboutUser(user);
 
             Command command = Command.valueByString(request.getUsersRequest());
             Processor processor = (command == null ? new RequestProcessor(request.getUsersRequest()) : command);
@@ -50,7 +47,6 @@ public class MainLoop {
             List<String> messages = requestHandler.getAnswerByProcessor(processor, user);
             output.tellUser(messages, user);
 
-            dataBaseManager.updateDataAboutUser(user);
             dataBaseManager.endTransaction();
         }
     }
