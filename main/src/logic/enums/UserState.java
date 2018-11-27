@@ -2,17 +2,12 @@ package logic.enums;
 
 import logic.handlers.PhrasesHandler;
 
-import java.util.function.Supplier;
 
 public enum UserState {
-    START(PhrasesHandler.getStartHelp()) {
-    },
-    DIALOG(PhrasesHandler.getDialogHelp()) {
-    },
-    QUIZ(PhrasesHandler.getQuizHelp()) {
-    },
-    EXIT(null) {
-    };
+    START(PhrasesHandler.getStartHelp()),
+    DIALOG(PhrasesHandler.getDialogHelp()),
+    QUIZ(PhrasesHandler.getQuizHelp()),
+    EXIT(null);
 
     private String description;
 
@@ -22,5 +17,5 @@ public enum UserState {
 
     public String getDescription() {
         return description;
-    };
+    }
 }
