@@ -35,7 +35,7 @@ public class MainLoop {
             Long id = request.getUserId();
 
             dataBaseManager.beginTransaction();
-            User user = dataBaseManager.getNewUser(id);
+            User user = dataBaseManager.getUser(id);
 
             if (user.getState() == UserState.EXIT) {
                 user = dataBaseManager.recreateUser(user.getId());

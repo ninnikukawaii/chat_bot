@@ -35,7 +35,7 @@ public class DataBaseManagerTest {
 
     @Test
     public void getUserFromDataBase() {
-        User user = dataBaseManager.getNewUser(User.defaultId);
+        User user = dataBaseManager.getUser(User.defaultId);
 
         User userFromDB = dataBaseManager.findUserById(User.defaultId);
         assertEquals(user, userFromDB);
@@ -43,8 +43,8 @@ public class DataBaseManagerTest {
 
     @Test
     public void appendTwoEqualUser() {
-        User firstUser = dataBaseManager.getNewUser(User.defaultId);
-        User secondUser = dataBaseManager.getNewUser(User.defaultId);
+        User firstUser = dataBaseManager.getUser(User.defaultId);
+        User secondUser = dataBaseManager.getUser(User.defaultId);
 
         User userFromDB =  dataBaseManager.findUserById(User.defaultId);
         assertEquals(firstUser, secondUser);
@@ -56,7 +56,7 @@ public class DataBaseManagerTest {
         Long firstId = 10L;
         Long secondId = 11L;
 
-        dataBaseManager.getNewUser(firstId);
+        dataBaseManager.getUser(firstId);
 
         User userFromDB = dataBaseManager.findUserById(secondId);
 
@@ -65,8 +65,8 @@ public class DataBaseManagerTest {
 
     @Test
     public void appendTwoUsers() {
-        User firstUser = dataBaseManager.getNewUser(9L);
-        User secondUser = dataBaseManager.getNewUser(10L);
+        User firstUser = dataBaseManager.getUser(9L);
+        User secondUser = dataBaseManager.getUser(10L);
 
         assertNotEquals(firstUser, secondUser);
     }
@@ -80,7 +80,7 @@ public class DataBaseManagerTest {
 
     @Test
     public void getUserInNewTransaction() throws DataBaseException {
-        User user = dataBaseManager.getNewUser(User.defaultId);
+        User user = dataBaseManager.getUser(User.defaultId);
 
         dataBaseManager.endTransaction();
         dataBaseManager.beginTransaction();
@@ -92,7 +92,7 @@ public class DataBaseManagerTest {
 
     @Test
     public void savingUserChange() throws DataBaseException {
-        User user = dataBaseManager.getNewUser(User.defaultId);
+        User user = dataBaseManager.getUser(User.defaultId);
         user.setState(UserState.DIALOG);
 
         dataBaseManager.endTransaction();
@@ -118,7 +118,7 @@ public class DataBaseManagerTest {
 
     @Test
     public void savedQuestionIsCorrect() throws DataBaseException {
-        User user = dataBaseManager.getNewUser(User.defaultId);
+        User user = dataBaseManager.getUser(User.defaultId);
 
         Question question = new Question("question", "answer");
         user.setLastQuestion(question);

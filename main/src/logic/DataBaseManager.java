@@ -33,7 +33,7 @@ public class DataBaseManager {
         entityTransaction = null;
     }
 
-    public User getNewUser(Long id) {
+    public User getUser(Long id) {
         User user = findUserById(id);
 
         if (user == null) {
