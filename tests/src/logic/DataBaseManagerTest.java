@@ -100,20 +100,18 @@ public class DataBaseManagerTest {
 
         User userFromDB = dataBaseManager.findUserById(User.defaultId);
 
-        assertEquals(user.getState(), userFromDB.getState());
+        assertEquals(UserState.DIALOG, userFromDB.getState());
     }
 
     @Test
-    public void recreateUser() throws DataBaseException {
-        dataBaseManager.getNewUser(User.defaultId);
-
-        dataBaseManager.endTransaction();
-        dataBaseManager.beginTransaction();
+    public void recreateUser() {
+        User user = dataBaseManager.getUser(User.defaultId);
+        user.setState(UserState.DIALOG);
 
         User recreatedUser = dataBaseManager.recreateUser(User.defaultId);
-        User user = new User(User.defaultId);
+        User defaultUser = new User(User.defaultId);
 
-        assertEquals(recreatedUser, user);
+        assertEquals(recreatedUser, defaultUser);
     }
 
     @Test
