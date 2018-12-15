@@ -1,14 +1,14 @@
 package logic.enums;
 
 import com.wolfram.alpha.WAQueryResult;
-import logic.handlers.MathHandler;
+import logic.MathProcessor;
 
 public enum MathCommand {
-    ALTERNATE_FORMS("приведение", "Alternate forms", MathHandler::getAlternateForms),
-    TRUTH_TABLE("таблица", "Truth table", MathHandler::getTruthTable),
-    DNF("днф", "Minimal forms", MathHandler::getDNF),
-    CNF("днф", "Minimal forms", MathHandler::getDNF), //надо допилить
-    ANF("днф", "Minimal forms", MathHandler::getDNF); //надо допилить
+    ALTERNATE_FORMS("приведение", "Alternate forms", MathProcessor::getAlternateForms),
+    TRUTH_TABLE("таблица", "Truth table", MathProcessor::getTruthTable),
+    DNF("днф", "Minimal forms", MathProcessor::getDNF),
+    CNF("днф", "Minimal forms", MathProcessor::getDNF), //надо допилить
+    ANF("днф", "Minimal forms", MathProcessor::getDNF); //надо допилить
 
     private final String name;
     private final String podName;

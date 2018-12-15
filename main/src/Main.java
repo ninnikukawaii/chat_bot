@@ -1,7 +1,7 @@
 import com.wolfram.alpha.WAException;
 import logic.exception.DataBaseException;
 import logic.exception.FileReadException;
-import logic.handlers.MathHandler;
+import logic.MathProcessor;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.FileInputStream;
@@ -27,7 +27,7 @@ public class Main {
 
         Properties props = new Properties();
         props.load(new FileInputStream("resources/config.properties"));
-        MathHandler handler = new MathHandler(props);
+        MathProcessor handler = new MathProcessor(props);
         String input = "!X || Y";
 
         System.out.println(handler.getResponse(input));
