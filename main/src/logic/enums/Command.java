@@ -44,6 +44,11 @@ public enum Command implements Processor {
 
                 answer.add(PhrasesHandler.getEndQuizPhrase());
             }
+            else if (user.getState() == UserState.MATH_MODE) {
+                user.setState(UserState.DIALOG);
+
+                answer.add(PhrasesHandler.getEndMathModePhrase());
+            }
             return answer;
         }
     },
@@ -80,6 +85,19 @@ public enum Command implements Processor {
 
             if (user.getState() == UserState.QUIZ) {
                 answer.add(user.getLastQuestion().getQuestion());
+            }
+            return answer;
+        }
+    },
+    MATH_MODE (PhrasesHandler.getMathModCommand()) {
+        @Override
+        public List<String> requestProcessing(User user) {
+            List<String> answer = new ArrayList<>();
+
+            if (user.getState() == UserState.DIALOG) {
+                user.setState(UserState.MATH_MODE);
+
+                answer.add(PhrasesHandler.getMathModePhrase());
             }
             return answer;
         }

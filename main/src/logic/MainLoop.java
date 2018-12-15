@@ -15,12 +15,14 @@ public class MainLoop {
 
     private RequestHandler requestHandler;
     private DataBaseManager dataBaseManager;
+    private MathProcessor mathProcessor;
 
-    public MainLoop(DataBaseManager dataBaseManager) throws FileReadException {
+    public MainLoop(DataBaseManager dataBaseManager, MathProcessor mathProcessor) throws FileReadException {
         QuestionsData questionsData = new QuestionsData("resources/questions.txt");
 
         requestHandler = new RequestHandler(questionsData);
         this.dataBaseManager = dataBaseManager;
+        this.mathProcessor = mathProcessor;
     }
 
     public void startLoop(Input input, Output output) throws InterruptedException, DataBaseException {
@@ -42,7 +44,17 @@ public class MainLoop {
             }
 
             Command command = Command.valueByString(request.getUsersRequest());
-            Processor processor = (command == null ? new RequestProcessor(request.getUsersRequest()) : command);
+            Processor processor;
+
+            if (command != null) {
+                processor = command;
+            }
+            else if (user.getState() == UserState.MATH_MODE) {
+                processor = mathProcessor;
+            }
+            else {
+                processor = new RequestProcessor(request.getUsersRequest());
+            }
 
             List<String> messages = requestHandler.getAnswerByProcessor(processor, user);
             output.tellUser(messages, user);
