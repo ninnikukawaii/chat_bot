@@ -84,5 +84,11 @@ public class PhrasesHandler {
         return "Для начала диалога введите: \"" + getStartCommand() + "\" (без кавычек)";
     }
 
+    public static String getWolframErrorPhrase() {
+        return "Ошибка соединения с Wolfram|Alpha!";
+    }
 
+    public static String getWolframIncorrectInputPhrase() {
+        return "Ошибка обработки запроса. Проверьте ввод!";
+    }
 }
