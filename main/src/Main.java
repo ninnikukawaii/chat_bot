@@ -1,12 +1,15 @@
-import com.wolfram.alpha.*;
+import com.wolfram.alpha.WAException;
 import logic.exception.DataBaseException;
 import logic.exception.FileReadException;
+import logic.handlers.MathHandler;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Properties;
 
 public class Main {
-    public static void main(String[] args) throws FileReadException, TelegramApiException, InterruptedException, IOException, DataBaseException {
+    public static void main(String[] args) throws FileReadException, TelegramApiException, InterruptedException, IOException, DataBaseException, WAException {
         /*ApiContextInitializer.init();
         TelegramBotsApi botapi = new TelegramBotsApi();
 
@@ -22,8 +25,14 @@ public class Main {
         mainLoop.startLoop(bot, bot);*/
 
 
-        String input = "pi";
-        WAEngine engine = new WAEngine();
+        Properties props = new Properties();
+        props.load(new FileInputStream("resources/config.properties"));
+        MathHandler handler = new MathHandler(props);
+        String input = "!X || Y";
+
+        System.out.println(handler.getResponse(input));
+        /*WAEngine engine = new WAEngine();
+        String input = "!X || Y";
 
         // These properties will be set in all the WAQuery objects created from this WAEngine.
         engine.setAppID("T4W973-VHYVW6J7UA");
@@ -74,6 +83,6 @@ public class Main {
             }
         } catch (WAException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }
