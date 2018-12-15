@@ -29,12 +29,16 @@ public class PhrasesHandler {
         return "/start";
     }
 
+    public static String getMathModCommand() {
+        return "Математический режим";
+    }
+
     public static String getStartQuizPhrase() {
         return "Давайте сыграем в викторину! Если есть вопросы, то скажите: " + getHelpCommand();
     }
 
-    public static String getQuestionOnQuiz(String qiestion) {
-        return qiestion;
+    public static String getQuestionOnQuiz(String question) {
+        return question;
     }
 
     public static String getCorrectAnswerPhrase() {
@@ -84,5 +88,15 @@ public class PhrasesHandler {
         return "Для начала диалога введите: \"" + getStartCommand() + "\" (без кавычек)";
     }
 
+    public static String getMathModeHelp() {
+        return "ЗДЕСЬ ДОЛЖЕН БЫТЬ HELP ПО MATH_MODE STATE";
+    }
 
+    public static String getMathModePhrase() {
+        return "Вы перешли в математический режим. Подробнее о режиме: " + getHelpCommand();
+    }
+
+    public static String getEndMathModePhrase() {
+        return "Ждём вас в математическом режиме снова!";
+    }
 }
