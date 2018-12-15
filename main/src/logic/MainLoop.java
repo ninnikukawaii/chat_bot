@@ -4,6 +4,7 @@ import logic.enums.Command;
 import logic.enums.UserState;
 import logic.exception.DataBaseException;
 import logic.exception.FileReadException;
+import logic.handlers.MathHandler;
 import logic.handlers.RequestHandler;
 import logic.interfaces.Input;
 import logic.interfaces.Output;
@@ -15,14 +16,14 @@ public class MainLoop {
 
     private RequestHandler requestHandler;
     private DataBaseManager dataBaseManager;
-    private MathProcessor mathProcessor;
+    private MathHandler mathHandler;
 
-    public MainLoop(DataBaseManager dataBaseManager, MathProcessor mathProcessor) throws FileReadException {
+    public MainLoop(DataBaseManager dataBaseManager, MathHandler mathHandler) throws FileReadException {
         QuestionsData questionsData = new QuestionsData("resources/questions.txt");
 
         requestHandler = new RequestHandler(questionsData);
         this.dataBaseManager = dataBaseManager;
-        this.mathProcessor = mathProcessor;
+        this.mathHandler = mathHandler;
     }
 
     public void startLoop(Input input, Output output) throws InterruptedException, DataBaseException {
@@ -50,7 +51,7 @@ public class MainLoop {
                 processor = command;
             }
             else if (user.getState() == UserState.MATH_MODE) {
-                processor = mathProcessor;
+                processor = new MathProcessor(request.getUsersRequest(), mathHandler);
             }
             else {
                 processor = new RequestProcessor(request.getUsersRequest());

@@ -1,16 +1,18 @@
 package logic.enums;
 
 import com.wolfram.alpha.WAQueryResult;
-import logic.MathProcessor;
+import logic.handlers.MathHandler;
+
+import java.util.List;
 
 public enum MathCommand {
-    ALTERNATE_FORMS("приведение", "Alternate forms", "Другие формы:", MathProcessor::getAlternateForms),
-    ROOTS("корни", "Solution", "Корни многочлена:", MathProcessor::getRoots),
-    TRUTH_TABLE("таблица", "Truth table", "Таблица истинности:", MathProcessor::getTruthTable),
-    MINIMAL_FORMS("к", "Minimal forms", "", (queryResult) -> null),
-    DNF("днф", "DNF", "Дизъюнктивная нормальная форма:", MathProcessor::getDNF),
-    CNF("кнф", "CNF", "Конъюнктивная нормальная форма:", MathProcessor::getCNF),
-    ANF("жегалкин", "ANF", "Многочлен Жегалкина:", MathProcessor::getANF);
+    ALTERNATE_FORMS("приведение", "alternate form", "Другие формы:", MathHandler::getAlternateForms),
+    ROOTS("корни", "solution", "Корни многочлена:", MathHandler::getRoots),
+    TRUTH_TABLE("таблица", "truth table", "Таблица истинности:", MathHandler::getTruthTable),
+    MINIMAL_FORMS("к", "minimal forms", "", (queryResult) -> null),
+    DNF("днф", "DNF", "Дизъюнктивная нормальная форма:", MathHandler::getDNF),
+    CNF("кнф", "CNF", "Конъюнктивная нормальная форма:", MathHandler::getCNF),
+    ANF("жегалкин", "ANF", "Многочлен Жегалкина:", MathHandler::getANF);
 
     private final String name;
     private final String podName;
@@ -49,11 +51,11 @@ public enum MathCommand {
         return capture;
     }
 
-    public String processCommand(WAQueryResult queryResult) {
+    public List<String> processCommand(WAQueryResult queryResult) {
         return commandProcessor.processCommand(queryResult);
     }
 
     interface CommandProcessor {
-        String processCommand(WAQueryResult queryResult);
+        List<String> processCommand(WAQueryResult queryResult);
     }
 }
