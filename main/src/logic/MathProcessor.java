@@ -1,17 +1,25 @@
-package logic.handlers;
+package logic;
 
 import com.wolfram.alpha.*;
+import logic.enums.MathCommand;
+import logic.interfaces.Processor;
 
+import java.util.List;
 import java.util.Properties;
 
-public class MathHandler {
+public class MathProcessor implements Processor {
     private WAEngine engine;
     private final String format = "plaintext";
 
-    public MathHandler(Properties props) {
+    public MathProcessor(Properties props) {
         engine = new WAEngine();
         engine.setAppID(props.getProperty("wolframAppID"));
         engine.addFormat(format);
+    }
+
+    @Override
+    public List<String> requestProcessing(User user) {
+        return null;
     }
 
     public String getResponse(String request) throws WAException {
@@ -31,12 +39,12 @@ public class MathHandler {
     }
 
     public static String getAlternateForms(WAQueryResult queryResult) {
-        return addCapture(getPodText(queryResult, "Alternate forms"),
+        return addCapture(getPodText(queryResult, MathCommand.ALTERNATE_FORMS.getPodName()),
                 "Другие формы:");
     }
 
     public static String getTruthTable(WAQueryResult queryResult) {
-        return addCapture(getPodText(queryResult, "Truth table"),
+        return addCapture(getPodText(queryResult, MathCommand.TRUTH_TABLE.getPodName()),
                 "Таблица истинности:");
     }
 
