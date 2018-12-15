@@ -97,7 +97,9 @@ public class PhrasesHandler {
     }
 
     public static String getMathModeHelp() {
-        return "ЗДЕСЬ ДОЛЖЕН БЫТЬ HELP ПО MATH_MODE STATE";
+        return "Для выполнения математических преобразований введите строку вида \"тип выражение\"," +
+                "где тип может быть равен \"приведение\" или \"корни\" для многочленов и " +
+                "\"ДНФ\", \"КНФ\", \"таблица\" или \"Жегалкин\" для булевых функций";
     }
 
     public static String getMathModePhrase() {

@@ -5,6 +5,7 @@ import logic.MathProcessor;
 
 public enum MathCommand {
     ALTERNATE_FORMS("приведение", "Alternate forms", "Другие формы:", MathProcessor::getAlternateForms),
+    ROOTS("корни", "Solution", "Корни многочлена:", MathProcessor::getRoots),
     TRUTH_TABLE("таблица", "Truth table", "Таблица истинности:", MathProcessor::getTruthTable),
     MINIMAL_FORMS("к", "Minimal forms", "", (queryResult) -> null),
     DNF("днф", "DNF", "Дизъюнктивная нормальная форма:", MathProcessor::getDNF),

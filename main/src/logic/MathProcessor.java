@@ -26,6 +26,10 @@ public class MathProcessor implements Processor {
     public String getResponse(String request) {
         String[] parts = request.split(" ", 2);
 
+        if (parts.length != 2) {
+            return PhrasesHandler.getWolframIncorrectInputPhrase();
+        }
+
         WAQuery query = engine.createQuery();
         query.setInput(parts[1]);
 
@@ -55,6 +59,11 @@ public class MathProcessor implements Processor {
     public static String getAlternateForms(WAQueryResult queryResult) {
         return addCapture(getPodText(queryResult, MathCommand.ALTERNATE_FORMS.getPodName()),
                 MathCommand.ALTERNATE_FORMS.getCapture());
+    }
+
+    public static String getRoots(WAQueryResult queryResult) {
+        return addCapture(getPodText(queryResult, MathCommand.ROOTS.getPodName()),
+                MathCommand.ROOTS.getCapture());
     }
 
     public static String getTruthTable(WAQueryResult queryResult) {
