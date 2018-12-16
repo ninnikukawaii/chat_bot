@@ -95,13 +95,21 @@ public class RequestHandlerTest {
     }
 
     @Test
+    public void testMathMode() {
+        user.setState(UserState.DIALOG);
+        List<String> result = requestHandler.getAnswerByProcessor(Command.MATH_MODE, user);
+        assertThat(result, hasItem(PhrasesHandler.getMathModePhrase()));
+        assertEquals(UserState.MATH_MODE, user.getState());
+    }
+
+    @Test
     public void testIncorrectPhrase() {
         List<String> result = requestHandler.getAnswerByProcessor(new RequestProcessor("qwerty"), user);
         assertThat(result, hasItem(PhrasesHandler.getUnknownPhrase()));
     }
 
     @DataPoints
-    public static List<UserState> states = Arrays.asList(UserState.START, UserState.DIALOG, UserState.QUIZ);
+    public static List<UserState> states = Arrays.asList(UserState.START, UserState.DIALOG, UserState.QUIZ, UserState.MATH_MODE);
 
     @Theory
     public void testEndDialogWithInitialState(UserState state) {
