@@ -7,7 +7,7 @@ import java.util.List;
 
 public enum MathCommand {
     ALTERNATE_FORMS("приведение", "alternate form", "Другие формы:", MathHandler::getAlternateForms),
-    ROOTS("корни", "solution", "Корни многочлена:", MathHandler::getRoots),
+    ROOTS("корни", "root", "Корни многочлена:", MathHandler::getRoots),
     TRUTH_TABLE("таблица", "truth table", "Таблица истинности:", MathHandler::getTruthTable),
     MINIMAL_FORMS("к", "minimal forms", "", (queryResult) -> null),
     DNF("днф", "DNF", "Дизъюнктивная нормальная форма:", MathHandler::getDNF),

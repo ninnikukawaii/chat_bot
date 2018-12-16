@@ -4,6 +4,7 @@ import logic.MainLoop;
 import logic.exception.DataBaseException;
 import logic.exception.FileReadException;
 import logic.MathProcessor;
+import logic.handlers.MathHandler;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -24,9 +25,9 @@ public class Main {
 
         DataBaseManager dataBaseManager = DataBaseManager.getInstance();
 
-        MathProcessor mathProcessor = new MathProcessor(props);
+        MathHandler mathHandler = new MathHandler(props);
 
-        MainLoop mainLoop = new MainLoop(dataBaseManager, mathProcessor);
+        MainLoop mainLoop = new MainLoop(dataBaseManager, mathHandler);
         mainLoop.startLoop(bot, bot);
     }
 }
